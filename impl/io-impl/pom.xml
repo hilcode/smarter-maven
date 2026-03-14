@@ -25,13 +25,13 @@
     <parent>
         <groupId>org.cavebeetle</groupId>
         <artifactId>parent-java-pom</artifactId>
-        <version>2</version>
+        <version>3-SNAPSHOT</version>
         <relativePath>../../poms/parent-java-pom</relativePath>
     </parent>
 
     <groupId>org.cavebeetle.io</groupId>
     <artifactId>io-impl</artifactId>
-    <version>3.0</version>
+    <version>3.1-SNAPSHOT</version>
 
     <name>Implementation of IO API</name>
 
@@ -41,7 +41,7 @@
         <dependency>
             <groupId>org.cavebeetle.io</groupId>
             <artifactId>io-api</artifactId>
-            <version>3.0</version>
+            <version>3.1-SNAPSHOT</version>
         </dependency>
 
         <!-- Scope 'provided' -->
