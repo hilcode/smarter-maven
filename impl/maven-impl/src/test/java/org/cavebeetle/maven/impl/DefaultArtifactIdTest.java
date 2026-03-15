@@ -1,13 +1,13 @@
 package org.cavebeetle.maven.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultArtifactId}.
@@ -22,7 +22,7 @@ public final class DefaultArtifactIdTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         artifactIdAsText = "artifact-id";
@@ -39,7 +39,8 @@ public final class DefaultArtifactIdTest
     {
         try
         {
-            new DefaultArtifactId(null);
+            @SuppressWarnings("unused")
+            var ignored = new DefaultArtifactId(null);
             fail("Expected an IllegalArgumentException.");
         }
         catch (final IllegalArgumentException e)
@@ -56,7 +57,8 @@ public final class DefaultArtifactIdTest
     {
         try
         {
-            new DefaultArtifactId("");
+            @SuppressWarnings("unused")
+            var ignored = new DefaultArtifactId("");
             fail("Expected an IllegalArgumentException.");
         }
         catch (final IllegalArgumentException e)
@@ -90,6 +92,7 @@ public final class DefaultArtifactIdTest
      * Tests that an {@code ArtifactId} has a valid {@code Object#equals(Object)} implementation.
      */
     @Test
+    @SuppressWarnings("ObjectEqualsNull")
     public final void an_ArtifactId_has_a_valid_Object_equals_implementation()
     {
         assertTrue(artifactId.equals(artifactId));

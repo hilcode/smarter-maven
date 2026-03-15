@@ -1,20 +1,13 @@
 package org.cavebeetle.maven.impl;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.cavebeetle.maven.DirtyReason.CHANGES_DETECTED;
-import static org.cavebeetle.maven.DirtyReason.NOT_DIRTY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import java.util.List;
+
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.ProjectBuilder;
+import static org.cavebeetle.maven.DirtyReason.CHANGES_DETECTED;
+import static org.cavebeetle.maven.DirtyReason.NOT_DIRTY;
 import org.cavebeetle.maven.Gav;
 import org.cavebeetle.maven.GavGenerator;
 import org.cavebeetle.maven.GavToProjectMap;
@@ -22,8 +15,17 @@ import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.MavenExecutionListener;
 import org.cavebeetle.maven.Project;
 import org.codehaus.plexus.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * The unit tests for {@code DefaultAfterProjectsReadInternal}.
@@ -54,7 +56,7 @@ public final class DefaultAfterProjectsReadInternalTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockInternalApi = mock(InternalApi.class);
@@ -78,7 +80,8 @@ public final class DefaultAfterProjectsReadInternalTest
     {
         try
         {
-            new DefaultAfterProjectsReadInternal(null);
+            @SuppressWarnings("unused")
+            var ignored = new DefaultAfterProjectsReadInternal(null);
             fail("Expected a NullPointerException.");
         }
         catch (final NullPointerException e)

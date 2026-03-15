@@ -1,11 +1,11 @@
 package org.cavebeetle.maven.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultDigest}.
@@ -21,7 +21,7 @@ public final class DefaultDigestTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         bytes = new byte[256];

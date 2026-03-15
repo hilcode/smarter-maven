@@ -1,8 +1,8 @@
 package org.cavebeetle.maven.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.endsWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.endsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,9 +13,8 @@ import org.cavebeetle.maven.ActiveDetector;
 import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.MavenVersion;
 import org.codehaus.plexus.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Matchers;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 /**
@@ -35,7 +34,7 @@ public final class DefaultAfterSessionStartTest
      * Sets up each unit test.
      */
     @SuppressWarnings("boxing")
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockSmarterMavenVersion = mock(MavenVersion.class);
@@ -45,7 +44,7 @@ public final class DefaultAfterSessionStartTest
         mockActiveDetector = mock(ActiveDetector.class);
         mockInternalApi = mock(InternalApi.class);
         Mockito.when(mockInternalApi.getActiveDetector()).thenReturn(mockActiveDetector);
-        Mockito.when(mockActiveDetector.showBanner(Matchers.any(MavenSession.class))).thenReturn(true);
+        Mockito.when(mockActiveDetector.showBanner(Mockito.any(MavenSession.class))).thenReturn(true);
         afterSessionStart = new DefaultAfterSessionStart(mockInternalApi);
     }
 

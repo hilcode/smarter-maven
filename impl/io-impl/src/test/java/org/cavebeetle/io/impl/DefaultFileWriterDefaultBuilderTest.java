@@ -1,10 +1,11 @@
 package org.cavebeetle.io.impl;
 
-import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.io.IOException;
-import org.junit.Before;
-import org.junit.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultFileWriter.DefaultBuilder}.
@@ -16,7 +17,7 @@ public final class DefaultFileWriterDefaultBuilderTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         builder = new DefaultFileWriter.DefaultBuilder();

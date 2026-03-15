@@ -1,12 +1,12 @@
 package org.cavebeetle.maven.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.cavebeetle.maven.ArtifactId;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultArtifactId.DefaultBuilder}.
@@ -18,7 +18,7 @@ public final class DefaultArtifactIdDefaultBuilderTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         artifactIdBuilder = new DefaultArtifactId.DefaultBuilder();

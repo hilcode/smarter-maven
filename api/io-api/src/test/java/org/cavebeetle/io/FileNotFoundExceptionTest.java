@@ -1,8 +1,8 @@
 package org.cavebeetle.io;
 
-import static org.junit.Assert.assertSame;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code FileNotFoundException}.
@@ -15,7 +15,7 @@ public final class FileNotFoundExceptionTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         message = "message";

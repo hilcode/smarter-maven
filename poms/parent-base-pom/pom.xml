@@ -39,10 +39,6 @@
 
     </licenses>
 
-    <prerequisites>
-        <maven>${maven.main.version}</maven>
-    </prerequisites>
-
     <properties>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -52,11 +48,12 @@
 
         <guava.version>33.5.0-jre</guava.version>
         <javax.inject.version>1</javax.inject.version>
-        <junit.version>4.13.2</junit.version>
+        <junit.version>5.9.1</junit.version>
         <maven-compat.version>${maven.main.version}</maven-compat.version>
         <maven-core.version>${maven.main.version}</maven-core.version>
-        <mockito-core.version>1.9.5</mockito-core.version>
+        <mockito-core.version>5.23.0</mockito-core.version>
         <sisu-guice.version>4.2.0</sisu-guice.version>
+        <slf4j.version>1.7.36</slf4j.version>
 
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
         <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
@@ -102,13 +99,6 @@
             </dependency>
 
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-                <scope>test</scope>
-            </dependency>
-
-            <dependency>
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-compat</artifactId>
                 <version>${maven-compat.version}</version>
@@ -128,9 +118,23 @@
 
             <!-- Scope 'test' -->
             <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-nop</artifactId>
+                <version>${slf4j.version}</version>
                 <scope>test</scope>
             </dependency>
 

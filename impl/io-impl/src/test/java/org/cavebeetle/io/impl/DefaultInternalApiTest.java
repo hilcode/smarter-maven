@@ -1,18 +1,20 @@
 package org.cavebeetle.io.impl;
 
-import static com.google.inject.Guice.createInjector;
-import static java.io.File.createTempFile;
-import static org.junit.Assert.assertNotNull;
 import java.io.File;
+import static java.io.File.createTempFile;
 import java.io.IOException;
+
 import org.cavebeetle.io.FileWriter;
 import org.cavebeetle.io.InputStream;
 import org.cavebeetle.io.SourceFiles;
 import org.cavebeetle.io.StringWriter;
 import org.cavebeetle.io.TextFile;
 import org.cavebeetle.io.TextFileReader;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static com.google.inject.Guice.createInjector;
 import com.google.inject.Injector;
 
 /**
@@ -25,7 +27,7 @@ public final class DefaultInternalApiTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         final Injector injector = createInjector(new IoGuiceModule());

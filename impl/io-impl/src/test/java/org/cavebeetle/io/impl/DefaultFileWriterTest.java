@@ -1,25 +1,26 @@
 package org.cavebeetle.io.impl;
 
+import java.io.File;
 import static java.io.File.createTempFile;
+import java.io.FileReader;
+import java.io.IOException;
 import static java.lang.Character.MIN_HIGH_SURROGATE;
 import static java.lang.Character.MIN_LOW_SURROGATE;
 import static java.lang.Character.MIN_SUPPLEMENTARY_CODE_POINT;
 import static java.lang.String.copyValueOf;
+
 import static org.cavebeetle.io.IoApi.END_OF_LINE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
+import org.cavebeetle.io.IoException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import org.cavebeetle.io.IoException;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * The unit tests for {@code DefaultFileWriter}.
@@ -33,7 +34,7 @@ public final class DefaultFileWriterTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockDelegate = mock(java.io.FileWriter.class);

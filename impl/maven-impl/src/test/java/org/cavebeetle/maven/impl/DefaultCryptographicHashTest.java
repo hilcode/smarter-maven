@@ -2,17 +2,17 @@ package org.cavebeetle.maven.impl;
 
 import static org.cavebeetle.maven.CryptographicHashAlgorithm.MD2;
 import static org.cavebeetle.maven.CryptographicHashAlgorithm.MD5;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import org.cavebeetle.io.InputStream;
 import org.cavebeetle.maven.Digest;
 import org.cavebeetle.maven.InternalApi;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultCryptographicHash}.
@@ -25,7 +25,7 @@ public final class DefaultCryptographicHashTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockInternalApi = mock(InternalApi.class);

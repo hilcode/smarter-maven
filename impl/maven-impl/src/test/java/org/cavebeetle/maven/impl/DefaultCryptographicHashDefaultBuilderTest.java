@@ -1,14 +1,14 @@
 package org.cavebeetle.maven.impl;
 
-import static org.cavebeetle.maven.CryptographicHashAlgorithm.SHA1;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
 import org.cavebeetle.maven.CryptographicHash;
+import static org.cavebeetle.maven.CryptographicHashAlgorithm.SHA1;
 import org.cavebeetle.maven.InternalApi;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
 
 /**
  * The unit tests for {@code DefaultCryptographicHash.DefaultBuilder}.
@@ -21,7 +21,7 @@ public final class DefaultCryptographicHashDefaultBuilderTest
     /**
      * Sets up each unit test.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockInternalApi = mock(InternalApi.class);
@@ -36,7 +36,8 @@ public final class DefaultCryptographicHashDefaultBuilderTest
     {
         try
         {
-            new DefaultCryptographicHash.DefaultBuilder(null);
+            @SuppressWarnings("unused")
+            var ignored = new DefaultCryptographicHash.DefaultBuilder(null);
             fail("Expected a NullPointerException.");
         }
         catch (final NullPointerException e)

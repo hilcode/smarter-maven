@@ -1,9 +1,9 @@
 package org.cavebeetle.maven.impl;
 
 import static com.google.inject.Guice.createInjector;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import org.cavebeetle.maven.ActiveDetector;
 import org.cavebeetle.maven.AfterProjectsRead;
 import org.cavebeetle.maven.AfterProjectsReadInternal;
@@ -29,8 +29,8 @@ import org.cavebeetle.maven.SnapshotDetector;
 import org.cavebeetle.maven.SourceFilesDigest;
 import org.cavebeetle.maven.SourceFilesHashGenerator;
 import org.cavebeetle.maven.Version;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import com.google.inject.Injector;
 
 /**
@@ -43,7 +43,7 @@ public final class GuiceModuleTest
     /**
      * Sets up each unit test case.
      */
-    @Before
+    @BeforeEach
     public void setUp()
     {
         final MavenGuiceModule guiceModule = new MavenGuiceModule();

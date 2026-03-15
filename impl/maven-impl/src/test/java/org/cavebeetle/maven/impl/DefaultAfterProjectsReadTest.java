@@ -1,18 +1,7 @@
 package org.cavebeetle.maven.impl;
 
-import static com.google.common.base.Optional.of;
-import static com.google.common.collect.Lists.newArrayList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import java.util.List;
+
 import org.apache.maven.BuildAbort;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.MavenSession;
@@ -25,11 +14,23 @@ import org.cavebeetle.maven.GavToProjectMap;
 import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.InvalidProjectHierarchyDetector;
 import org.codehaus.plexus.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Matchers;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.google.common.base.Optional;
+import static com.google.common.base.Optional.of;
+import static com.google.common.collect.Lists.newArrayList;
 
 /**
  * The unit tests for {@code DefaultAfterProjectsReadInternal}.
@@ -53,7 +54,7 @@ public final class DefaultAfterProjectsReadTest
      * Sets up each unit test.
      */
     @SuppressWarnings("boxing")
-    @Before
+    @BeforeEach
     public void setUp()
     {
         mockLogger = mock(Logger.class);
@@ -63,8 +64,8 @@ public final class DefaultAfterProjectsReadTest
         mockActiveDetector = mock(ActiveDetector.class);
         mockInternalApi = mock(InternalApi.class);
         Mockito.when(mockInternalApi.getActiveDetector()).thenReturn(mockActiveDetector);
-        Mockito.when(mockActiveDetector.isSmarterMavenActive(Matchers.any(MavenSession.class))).thenReturn(true);
-        Mockito.when(mockActiveDetector.showBanner(Matchers.any(MavenSession.class))).thenReturn(true);
+        Mockito.when(mockActiveDetector.isSmarterMavenActive(Mockito.any(MavenSession.class))).thenReturn(true);
+        Mockito.when(mockActiveDetector.showBanner(Mockito.any(MavenSession.class))).thenReturn(true);
         mockGavToProjectMap = mock(GavToProjectMap.class);
         mockAfterProjectsReadInternal = mock(AfterProjectsReadInternal.class);
         when(mockInternalApi.getAfterProjectsReadInternal()).thenReturn(mockAfterProjectsReadInternal);
@@ -89,7 +90,8 @@ public final class DefaultAfterProjectsReadTest
     {
         try
         {
-            new DefaultAfterProjectsRead(null);
+            @SuppressWarnings("unused")
+            var ignored = new DefaultAfterProjectsRead(null);
             fail("Expected a NullPointerException.");
         }
         catch (final NullPointerException e)
