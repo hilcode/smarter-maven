@@ -9,7 +9,7 @@
 
     languages.java = with pkgs; {
         enable = true;
-        jdk.package = jdk8;
+        jdk.package = jdk11;
         lsp.enable = true;
         maven.enable = true;
     };
