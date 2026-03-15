@@ -50,20 +50,4 @@ public interface AfterProjectsReadInternal {
      * @return the dirty projects from those available in the given {@code GavToProjectMap}.
      */
     List<MavenProject> collectDirtyProjects(Logger logger, MavenSession mavenSession, GavToProjectMap gavToProjectMap);
-
-    /**
-     * Creates a dummy Maven project to create the correct output when nothing needs to be rebuilt.
-     *
-     * @return a dummy Maven project to create the correct output when nothing needs to be rebuilt.
-     */
-    MavenProject createDummyProjectToIndicateNothingToDo();
-
-    /**
-     * Creates a dummy Maven project to create the correct output when only the project hierarchy warnings should be
-     * shown.
-     *
-     * @return a dummy Maven project to create the correct output when only the project hierarchy warnings should be
-     *         shown.
-     */
-    MavenProject createDummyProjectToIndicateProjectHierarchyCheck();
 }

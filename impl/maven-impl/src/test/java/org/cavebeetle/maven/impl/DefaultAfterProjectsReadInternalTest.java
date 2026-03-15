@@ -271,16 +271,6 @@ public final class DefaultAfterProjectsReadInternalTest {
         assertSame(mavenProjects.get(2), dirtyProjects.get(1));
     }
 
-    /**
-     * Tests that creating a dummy Maven project works correctly.
-     */
-    @Test
-    public final void test_dummy() {
-        final MavenProject dummyMavenProject = afterProjectsRead.createDummyProjectToIndicateNothingToDo();
-        assertEquals("nothing", dummyMavenProject.getArtifactId());
-        assertEquals("(everything is up-to-date).", dummyMavenProject.getVersion());
-    }
-
     private List<Tuple> init(final int count) {
         final List<MavenProject> mavenProjects = createMavenProjects(count);
         when(mockMavenSession.getProjects()).thenReturn(mavenProjects);

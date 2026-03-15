@@ -39,8 +39,7 @@ public final class DefaultMavenExecutionListener implements MavenExecutionListen
     /**
      * Creates a new {@code DefaultMavenExecutionListener}.
      *
-     * @param internalApi
-     *            the {@code InternalApi} instance.
+     * @param internalApi the {@code InternalApi} instance.
      */
     @Inject
     public DefaultMavenExecutionListener(final InternalApi internalApi) {

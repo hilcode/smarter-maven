@@ -33,8 +33,7 @@ public final class DefaultAfterProjectsRead implements AfterProjectsRead {
     /**
      * Creates a new {@code DefaultAfterProjectsRead}.
      *
-     * @param internalApi
-     *            the {@code InternalApi} instance.
+     * @param internalApi the {@code InternalApi} instance.
      */
     @Inject
     public DefaultAfterProjectsRead(final InternalApi internalApi) {
@@ -73,7 +72,8 @@ public final class DefaultAfterProjectsRead implements AfterProjectsRead {
                     if (!dirtyProjects.isEmpty()) {
                         logger.info("");
                     } else {
-                        dirtyProjects.add(afterProjectsReadInternal.createDummyProjectToIndicateNothingToDo());
+                        dirtyProjects.add(mavenSession.getTopLevelProject());
+                        mavenSession.getRequest().setGoals(Lists.newArrayList("validate"));
                     }
                     mavenSession.setProjects(dirtyProjects);
                 }
@@ -81,11 +81,8 @@ public final class DefaultAfterProjectsRead implements AfterProjectsRead {
                 mavenSession
                         .getUserProperties()
                         .setProperty(ActiveDetector.SHOW_PROJECT_HIERARCHY_WARNINGS_PROPERTY, "TRUE");
-                mavenSession.getGoals().clear();
-                mavenSession.getGoals().add("validate");
-                final MavenProject dummyProject =
-                        afterProjectsReadInternal.createDummyProjectToIndicateProjectHierarchyCheck();
-                mavenSession.setProjects(Lists.newArrayList(dummyProject));
+                mavenSession.getRequest().setGoals(Lists.newArrayList("validate"));
+                mavenSession.setProjects(Lists.newArrayList(mavenSession.getTopLevelProject()));
             }
         }
     }

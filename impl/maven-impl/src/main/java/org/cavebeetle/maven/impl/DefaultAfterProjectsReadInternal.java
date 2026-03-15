@@ -102,20 +102,4 @@ public final class DefaultAfterProjectsReadInternal implements AfterProjectsRead
         }
         return "%-" + maxGavLength + "s [%1s] %s";
     }
-
-    @Override
-    public MavenProject createDummyProjectToIndicateNothingToDo() {
-        final MavenProject dummyProject = new MavenProject();
-        dummyProject.setArtifactId("nothing");
-        dummyProject.setVersion("(everything is up-to-date).");
-        return dummyProject;
-    }
-
-    @Override
-    public MavenProject createDummyProjectToIndicateProjectHierarchyCheck() {
-        final MavenProject dummyProject = new MavenProject();
-        dummyProject.setArtifactId("nothing");
-        dummyProject.setVersion("(only checking the project hierarchy).");
-        return dummyProject;
-    }
 }

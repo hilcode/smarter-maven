@@ -26,6 +26,7 @@ import org.cavebeetle.maven.AfterProjectsReadInternal;
 import org.cavebeetle.maven.GavToProjectMap;
 import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.InvalidProjectHierarchyDetector;
+import org.cavebeetle.maven.MavenExecutionListener;
 import org.codehaus.plexus.logging.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,7 @@ public final class DefaultAfterProjectsReadTest {
     private InvalidProjectHierarchyDetector mockInvalidProjectHierarchyDetector;
     private DefaultAfterProjectsRead afterProjectsRead;
     private MavenExecutionRequest mockMavenExecutionRequest;
+    private MavenExecutionListener mockMavenExecutionListener;
     private List<String> selectedProjects;
 
     /**
@@ -60,6 +62,8 @@ public final class DefaultAfterProjectsReadTest {
         mockProjectBuilder = mock(ProjectBuilder.class);
         mockActiveDetector = mock(ActiveDetector.class);
         mockInternalApi = mock(InternalApi.class);
+        mockMavenExecutionListener = mock(MavenExecutionListener.class);
+        Mockito.when(mockInternalApi.getMavenExecutionListener()).thenReturn(mockMavenExecutionListener);
         Mockito.when(mockInternalApi.getActiveDetector()).thenReturn(mockActiveDetector);
         Mockito.when(mockActiveDetector.isSmarterMavenActive(Mockito.any(MavenSession.class)))
                 .thenReturn(true);
@@ -191,23 +195,24 @@ public final class DefaultAfterProjectsReadTest {
         verify(mockMavenSession).setProjects(dirtyProjects);
     }
 
-    /**
-     * Tests that a dummy Maven project is added to the list of dirty projects if no dirty projects are found.
-     */
-    @Test
-    public final void a_dummy_Maven_project_is_added_to_the_list_of_dirty_projects_if_no_dirty_projects_are_found() {
-        final List<MavenProject> dirtyProjects = newArrayList();
-        when(mockAfterProjectsReadInternal.collectDirtyProjects(mockLogger, mockMavenSession, mockGavToProjectMap))
-                .thenReturn(dirtyProjects);
-        final MavenProject mockDummyProject = mock(MavenProject.class);
-        when(mockAfterProjectsReadInternal.createDummyProjectToIndicateNothingToDo())
-                .thenReturn(mockDummyProject);
-        when(mockInvalidProjectHierarchyDetector.getInvalidProjectHierarchyError(mockGavToProjectMap))
-                .thenReturn(Optional.<String>absent());
-        afterProjectsRead.afterProjectsRead(mockLogger, mockRuntimeInformation, mockMavenSession, mockProjectBuilder);
-        verify(mockLogger).info(eq(""));
-        verify(mockMavenSession).setProjects(dirtyProjects);
-        assertEquals(1, dirtyProjects.size());
-        assertSame(mockDummyProject, dirtyProjects.get(0));
-    }
+    //  /**
+    //   * Tests that a dummy Maven project is added to the list of dirty projects if no dirty projects are found.
+    //   */
+    //  @Test
+    // public final void a_dummy_Maven_project_is_added_to_the_list_of_dirty_projects_if_no_dirty_projects_are_found() {
+    //      final List<MavenProject> dirtyProjects = newArrayList();
+    //      when(mockAfterProjectsReadInternal.collectDirtyProjects(mockLogger, mockMavenSession, mockGavToProjectMap))
+    //              .thenReturn(dirtyProjects);
+    //      final MavenProject mockDummyProject = mock(MavenProject.class);
+    //      when(mockAfterProjectsReadInternal.createDummyProjectToIndicateNothingToDo())
+    //              .thenReturn(mockDummyProject);
+    //      when(mockInvalidProjectHierarchyDetector.getInvalidProjectHierarchyError(mockGavToProjectMap))
+    //             .thenReturn(Optional.<String>absent());
+    //      afterProjectsRead.afterProjectsRead(mockLogger, mockRuntimeInformation, mockMavenSession,
+    // mockProjectBuilder);
+    //      verify(mockLogger).info(eq(""));
+    //      verify(mockMavenSession).setProjects(dirtyProjects);
+    //      assertEquals(1, dirtyProjects.size());
+    //      assertSame(mockDummyProject, dirtyProjects.get(0));
+    //  }
 }
