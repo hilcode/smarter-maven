@@ -3,6 +3,7 @@ package org.cavebeetle.maven.impl;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
+
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -24,10 +25,7 @@ import org.codehaus.plexus.logging.Logger;
  * The implementation of {@code AfterProjectsReadInternal}.
  */
 @Singleton
-public final class DefaultAfterProjectsReadInternal
-        implements
-            AfterProjectsReadInternal
-{
+public final class DefaultAfterProjectsReadInternal implements AfterProjectsReadInternal {
     private final InternalApi internalApi;
     private final GavGenerator gavGenerator;
 
@@ -38,8 +36,7 @@ public final class DefaultAfterProjectsReadInternal
      *            the {@code InternalApi} instance.
      */
     @Inject
-    public DefaultAfterProjectsReadInternal(final InternalApi internalApi)
-    {
+    public DefaultAfterProjectsReadInternal(final InternalApi internalApi) {
         checkNotNull(internalApi, "Missing 'internalApi'.");
         this.internalApi = internalApi;
         gavGenerator = internalApi.getGavGenerator();
@@ -47,24 +44,15 @@ public final class DefaultAfterProjectsReadInternal
 
     @Override
     public GavToProjectMap initializeGavToProjectMap(
-            final Logger logger,
-            final MavenSession mavenSession,
-            final ProjectBuilder projectBuilder)
-    {
+            final Logger logger, final MavenSession mavenSession, final ProjectBuilder projectBuilder) {
         checkNotNull(logger, "Missing 'logger'.");
         checkNotNull(mavenSession, "Missing 'mavenSession'.");
         checkNotNull(projectBuilder, "Missing 'projectBuilder'.");
         final GavToProjectMap gavToProjectMap = internalApi.newGavToProjectMap();
-        for (final MavenProject mavenProject : mavenSession.getProjects())
-        {
+        for (final MavenProject mavenProject : mavenSession.getProjects()) {
             final Gav projectGav = gavGenerator.getGav(mavenProject);
             final Project project =
-                    internalApi.newProject(
-                            logger,
-                            mavenSession,
-                            projectBuilder,
-                            mavenProject,
-                            gavToProjectMap);
+                    internalApi.newProject(logger, mavenSession, projectBuilder, mavenProject, gavToProjectMap);
             gavToProjectMap.putProject(projectGav, project);
         }
         return gavToProjectMap;
@@ -72,10 +60,7 @@ public final class DefaultAfterProjectsReadInternal
 
     @Override
     public MavenExecutionRequest getMavenExecutionRequest(
-            final Logger logger,
-            final MavenSession mavenSession,
-            final GavToProjectMap gavToProjectMap)
-    {
+            final Logger logger, final MavenSession mavenSession, final GavToProjectMap gavToProjectMap) {
         checkNotNull(logger, "Missing 'logger'.");
         checkNotNull(mavenSession, "Missing 'mavenSession'.");
         checkNotNull(gavToProjectMap, "Missing 'gavToProjectMap'.");
@@ -88,38 +73,30 @@ public final class DefaultAfterProjectsReadInternal
 
     @Override
     public List<MavenProject> collectDirtyProjects(
-            final Logger logger,
-            final MavenSession mavenSession,
-            final GavToProjectMap gavToProjectMap)
-    {
+            final Logger logger, final MavenSession mavenSession, final GavToProjectMap gavToProjectMap) {
         checkNotNull(mavenSession, "Missing 'mavenSession'.");
         checkNotNull(gavToProjectMap, "Missing 'gavToProjectMap'.");
         final String dirtyReasonMask = getDirtyReasonMask(gavToProjectMap);
         final List<MavenProject> dirtyProjects = newArrayList();
-        for (final MavenProject mavenProject : mavenSession.getProjects())
-        {
+        for (final MavenProject mavenProject : mavenSession.getProjects()) {
             final Gav projectGav = gavGenerator.getGav(mavenProject);
             final Project project = gavToProjectMap.getProject(projectGav);
             final DirtyReason dirtyReason = project.findDirtyReason(true);
             final String dirtyAsText = dirtyReason.isDirty() ? "*" : " ";
             final String dirtyReasonMessage = format(dirtyReasonMask, projectGav, dirtyAsText, dirtyReason.getReason());
             logger.info(dirtyReasonMessage);
-            if (dirtyReason.isDirty())
-            {
+            if (dirtyReason.isDirty()) {
                 dirtyProjects.add(mavenProject);
             }
         }
         return dirtyProjects;
     }
 
-    private String getDirtyReasonMask(final GavToProjectMap gavToProjectMap)
-    {
+    private String getDirtyReasonMask(final GavToProjectMap gavToProjectMap) {
         int maxGavLength = 0;
-        for (final Gav gav : gavToProjectMap)
-        {
+        for (final Gav gav : gavToProjectMap) {
             final int gavLength = gav.toString().length();
-            if (gavLength > maxGavLength)
-            {
+            if (gavLength > maxGavLength) {
                 maxGavLength = gavLength;
             }
         }
@@ -127,8 +104,7 @@ public final class DefaultAfterProjectsReadInternal
     }
 
     @Override
-    public MavenProject createDummyProjectToIndicateNothingToDo()
-    {
+    public MavenProject createDummyProjectToIndicateNothingToDo() {
         final MavenProject dummyProject = new MavenProject();
         dummyProject.setArtifactId("nothing");
         dummyProject.setVersion("(everything is up-to-date).");
@@ -136,8 +112,7 @@ public final class DefaultAfterProjectsReadInternal
     }
 
     @Override
-    public MavenProject createDummyProjectToIndicateProjectHierarchyCheck()
-    {
+    public MavenProject createDummyProjectToIndicateProjectHierarchyCheck() {
         final MavenProject dummyProject = new MavenProject();
         dummyProject.setArtifactId("nothing");
         dummyProject.setVersion("(only checking the project hierarchy).");

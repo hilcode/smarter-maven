@@ -1,5 +1,6 @@
 package org.cavebeetle.maven.impl;
 
+import com.google.inject.AbstractModule;
 import org.cavebeetle.maven.ActiveDetector;
 import org.cavebeetle.maven.AfterProjectsRead;
 import org.cavebeetle.maven.AfterProjectsReadInternal;
@@ -25,18 +26,13 @@ import org.cavebeetle.maven.SnapshotDetector;
 import org.cavebeetle.maven.SourceFilesDigest;
 import org.cavebeetle.maven.SourceFilesHashGenerator;
 import org.cavebeetle.maven.Version;
-import com.google.inject.AbstractModule;
 
 /**
  * The Guice module describing the required bindings.
  */
-public final class MavenGuiceModule
-        extends
-            AbstractModule
-{
+public final class MavenGuiceModule extends AbstractModule {
     @Override
-    public void configure()
-    {
+    public void configure() {
         bind(ActiveDetector.class).to(DefaultActiveDetector.class);
         bind(AfterProjectsRead.class).to(DefaultAfterProjectsRead.class);
         bind(AfterProjectsReadInternal.class).to(DefaultAfterProjectsReadInternal.class);

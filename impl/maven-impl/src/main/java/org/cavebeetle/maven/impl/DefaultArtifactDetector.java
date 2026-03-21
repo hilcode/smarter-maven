@@ -1,6 +1,7 @@
 package org.cavebeetle.maven.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.File;
 import javax.inject.Singleton;
 import org.apache.maven.artifact.Artifact;
@@ -13,13 +14,9 @@ import org.cavebeetle.maven.ArtifactDetector;
  * The implementation of {@code ArtifactDetector}.
  */
 @Singleton
-public final class DefaultArtifactDetector
-        implements
-            ArtifactDetector
-{
+public final class DefaultArtifactDetector implements ArtifactDetector {
     @Override
-    public boolean hasArtifactInLocalRepository(final MavenSession mavenSession, final MavenProject mavenProject)
-    {
+    public boolean hasArtifactInLocalRepository(final MavenSession mavenSession, final MavenProject mavenProject) {
         checkNotNull(mavenSession, "Missing 'mavenSession'.");
         checkNotNull(mavenProject, "Missing 'mavenProject'.");
         final ArtifactRepository artifactRepository = mavenSession.getLocalRepository();
@@ -30,22 +27,18 @@ public final class DefaultArtifactDetector
     }
 
     @Override
-    public File getLocalRepositoryDirectory(final MavenSession mavenSession)
-    {
+    public File getLocalRepositoryDirectory(final MavenSession mavenSession) {
         final ArtifactRepository artifactRepository = mavenSession.getLocalRepository();
         final File localRepositoryDir = new File(artifactRepository.getBasedir());
         return localRepositoryDir;
     }
 
     @Override
-    public boolean hasArtifactInRemoteRepository(final MavenProject mavenProject)
-    {
+    public boolean hasArtifactInRemoteRepository(final MavenProject mavenProject) {
         checkNotNull(mavenProject, "Missing 'mavenProject'.");
         final Artifact artifact = mavenProject.getArtifact();
-        for (final ArtifactRepository remoteRepo : mavenProject.getRemoteArtifactRepositories())
-        {
-            if (remoteRepo.findVersions(artifact).contains(artifact.getVersion()))
-            {
+        for (final ArtifactRepository remoteRepo : mavenProject.getRemoteArtifactRepositories()) {
+            if (remoteRepo.findVersions(artifact).contains(artifact.getVersion())) {
                 return true;
             }
         }

@@ -5,8 +5,7 @@ import java.io.File;
 /**
  * A {@code FileHashGenerator} facilitates generating digests.
  */
-public interface FileHashGenerator
-{
+public interface FileHashGenerator {
     /**
      * Generates a {@code Digest} for (the contents of) the given {@code File}.
      *

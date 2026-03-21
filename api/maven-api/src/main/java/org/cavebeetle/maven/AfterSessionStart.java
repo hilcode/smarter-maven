@@ -7,8 +7,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code AfterSessionStart} handles the {@code afterSessionStart} event.
  */
-public interface AfterSessionStart
-{
+public interface AfterSessionStart {
     /**
      * Handles the {@code afterProjectsRead} event.
      *

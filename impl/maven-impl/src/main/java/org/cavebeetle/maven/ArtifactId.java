@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A project's artifact id.
  */
-public interface ArtifactId
-{
+public interface ArtifactId {
     /**
      * The constructor API for {@code ArtifactId}.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code ArtifactId}.
          *

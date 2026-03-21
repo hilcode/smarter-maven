@@ -1,6 +1,7 @@
 package org.cavebeetle.maven.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.cavebeetle.maven.ArtifactId;
@@ -12,18 +13,12 @@ import org.cavebeetle.maven.Version;
 /**
  * The implementation of {@code Gav}.
  */
-public final class DefaultGav
-        implements
-            Gav
-{
+public final class DefaultGav implements Gav {
     /**
      * The implementation of {@code Gav.Builder}.
      */
     @Singleton
-    public static final class DefaultBuilder
-            implements
-                Builder
-    {
+    public static final class DefaultBuilder implements Builder {
         private final SnapshotDetector snapshotDetector;
 
         /**
@@ -33,14 +28,12 @@ public final class DefaultGav
          *            the {@code SnapshotDetector} instance.
          */
         @Inject
-        public DefaultBuilder(final SnapshotDetector snapshotDetector)
-        {
+        public DefaultBuilder(final SnapshotDetector snapshotDetector) {
             this.snapshotDetector = snapshotDetector;
         }
 
         @Override
-        public Gav newGav(final GroupId groupId, final ArtifactId artifactId, final Version version)
-        {
+        public Gav newGav(final GroupId groupId, final ArtifactId artifactId, final Version version) {
             return new DefaultGav(snapshotDetector, groupId, artifactId, version);
         }
     }
@@ -67,8 +60,7 @@ public final class DefaultGav
             final SnapshotDetector snapshotDetector,
             final GroupId groupId,
             final ArtifactId artifactId,
-            final Version version)
-    {
+            final Version version) {
         checkNotNull(snapshotDetector, "Missing 'snapshotDetector'.");
         checkNotNull(groupId, "Missing 'groupId'.");
         checkNotNull(artifactId, "Missing 'artifactId'.");
@@ -81,46 +73,38 @@ public final class DefaultGav
     }
 
     @Override
-    public boolean isSnapshot()
-    {
+    public boolean isSnapshot() {
         return snapshotDetector.isSnapshot(this);
     }
 
     @Override
-    public GroupId getGroupId()
-    {
+    public GroupId getGroupId() {
         return groupId;
     }
 
     @Override
-    public ArtifactId getArtifactId()
-    {
+    public ArtifactId getArtifactId() {
         return artifactId;
     }
 
     @Override
-    public Version getVersion()
-    {
+    public Version getVersion() {
         return version;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 43;
         final int result = prime + gav.hashCode();
         return result;
     }
 
     @Override
-    public boolean equals(final Object object)
-    {
-        if (this == object)
-        {
+    public boolean equals(final Object object) {
+        if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         final DefaultGav other = (DefaultGav) object;
@@ -128,8 +112,7 @@ public final class DefaultGav
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return gav;
     }
 }

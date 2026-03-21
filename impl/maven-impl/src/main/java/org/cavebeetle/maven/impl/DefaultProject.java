@@ -4,6 +4,8 @@ import static com.google.common.base.Optional.absent;
 import static com.google.common.base.Optional.fromNullable;
 import static com.google.common.base.Optional.of;
 import static com.google.common.collect.Lists.newArrayList;
+
+import com.google.common.base.Optional;
 import java.io.File;
 import java.util.List;
 import javax.inject.Inject;
@@ -24,23 +26,16 @@ import org.cavebeetle.maven.GavToProjectMap;
 import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.Project;
 import org.codehaus.plexus.logging.Logger;
-import com.google.common.base.Optional;
 
 /**
  * The implementation of {@code Project}.
  */
-public final class DefaultProject
-        implements
-            Project
-{
+public final class DefaultProject implements Project {
     /**
      * The implementation of {@code Project.Builder}.
      */
     @Singleton
-    public static final class DefaultBuilder
-            implements
-                Builder
-    {
+    public static final class DefaultBuilder implements Builder {
         private final InternalApi internalApi;
 
         /**
@@ -50,8 +45,7 @@ public final class DefaultProject
          *            the {@code InternalApi} instance.
          */
         @Inject
-        public DefaultBuilder(final InternalApi internalApi)
-        {
+        public DefaultBuilder(final InternalApi internalApi) {
             this.internalApi = internalApi;
         }
 
@@ -61,9 +55,9 @@ public final class DefaultProject
                 final MavenSession mavenSession,
                 final ProjectBuilder mavenProjectBuilder,
                 final MavenProject mavenProject,
-                final GavToProjectMap gavToProjectMap)
-        {
-            return new DefaultProject(internalApi, logger, mavenSession, mavenProjectBuilder, mavenProject, gavToProjectMap);
+                final GavToProjectMap gavToProjectMap) {
+            return new DefaultProject(
+                    internalApi, logger, mavenSession, mavenProjectBuilder, mavenProject, gavToProjectMap);
         }
     }
 
@@ -102,8 +96,7 @@ public final class DefaultProject
             final MavenSession session,
             final ProjectBuilder projectBuilder,
             final MavenProject mavenProject,
-            final GavToProjectMap gavToProjectMap)
-    {
+            final GavToProjectMap gavToProjectMap) {
         dirtDetector = internalApi.getDirtDetector();
         gavGenerator = internalApi.getGavGenerator();
         this.logger = logger;
@@ -116,24 +109,20 @@ public final class DefaultProject
     }
 
     @Override
-    public MavenProject getMavenProject()
-    {
+    public MavenProject getMavenProject() {
         return mavenProject;
     }
 
     @Override
-    public boolean isProjectWithoutDirectory()
-    {
+    public boolean isProjectWithoutDirectory() {
         return !"pom.xml".equals(mavenProject.getFile().getName());
     }
 
     @Override
-    public File getSourceFilesFile()
-    {
+    public File getSourceFilesFile() {
         final StringBuilder sourceFilesFileName = new StringBuilder();
         sourceFilesFileName.append(".source-files");
-        if (isProjectWithoutDirectory())
-        {
+        if (isProjectWithoutDirectory()) {
             sourceFilesFileName.append('-');
             final String pomFileNameWithExtension = mavenProject.getFile().getName();
             final String pomFileName = pomFileNameWithExtension.substring(0, pomFileNameWithExtension.lastIndexOf('.'));
@@ -143,28 +132,23 @@ public final class DefaultProject
     }
 
     @Override
-    public File getBaseDir()
-    {
+    public File getBaseDir() {
         return mavenProject.getBasedir();
     }
 
     @Override
-    public File getBuildDir()
-    {
+    public File getBuildDir() {
         return buildDir;
     }
 
     @Override
-    public Gav getGav()
-    {
+    public Gav getGav() {
         return gav;
     }
 
     @Override
-    public DirtyReason findDirtyReason(final boolean includeModules)
-    {
-        if (dirtReason == null)
-        {
+    public DirtyReason findDirtyReason(final boolean includeModules) {
+        if (dirtReason == null) {
             final DirtyReason dirtDetected;
             dirtDetected = dirtDetector.findDirtyReason(logger, session, mavenProject, gavToProjectMap, includeModules);
             dirtReason = dirtDetected;
@@ -173,42 +157,34 @@ public final class DefaultProject
     }
 
     @Override
-    public Iterable<Project> getDependencies()
-    {
-        if (dependencies == null)
-        {
+    public Iterable<Project> getDependencies() {
+        if (dependencies == null) {
             init();
         }
         return dependencies;
     }
 
     @Override
-    public Iterable<Project> getModules()
-    {
-        if (modules == null)
-        {
+    public Iterable<Project> getModules() {
+        if (modules == null) {
             init();
         }
         return modules;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 43;
         final int result = prime + gav.hashCode();
         return result;
     }
 
     @Override
-    public boolean equals(final Object object)
-    {
-        if (this == object)
-        {
+    public boolean equals(final Object object) {
+        if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         final DefaultProject other = (DefaultProject) object;
@@ -216,17 +192,14 @@ public final class DefaultProject
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "[Project " + getGav() + "]";
     }
 
-    private void init()
-    {
+    private void init() {
         final List<Project> dependencies_ = newArrayList();
         final Optional<Project> maybeParentProject = findParent();
-        if (maybeParentProject.isPresent())
-        {
+        if (maybeParentProject.isPresent()) {
             final Project parentProject = maybeParentProject.get();
             dependencies_.add(parentProject);
         }
@@ -236,14 +209,11 @@ public final class DefaultProject
         modules = findModules();
     }
 
-    private Optional<Project> findParent()
-    {
+    private Optional<Project> findParent() {
         final Optional<MavenProject> maybeMavenProjectParent = fromNullable(mavenProject.getParent());
-        if (maybeMavenProjectParent.isPresent())
-        {
+        if (maybeMavenProjectParent.isPresent()) {
             final Gav parentGav = gavGenerator.getGav(maybeMavenProjectParent.get());
-            if (gavToProjectMap.containsProjectForGav(parentGav))
-            {
+            if (gavToProjectMap.containsProjectForGav(parentGav)) {
                 final Project projectParent = gavToProjectMap.getProject(parentGav);
                 return of(projectParent);
             }
@@ -251,15 +221,12 @@ public final class DefaultProject
         return absent();
     }
 
-    private List<Project> findDirectDependencies()
-    {
+    private List<Project> findDirectDependencies() {
         final List<Project> dependencies_ = newArrayList();
         final List<Dependency> directDependencies = mavenProject.getDependencies();
-        for (final Dependency dependency : directDependencies)
-        {
+        for (final Dependency dependency : directDependencies) {
             final Gav dependencyGav = gavGenerator.getGav(dependency);
-            if (gavToProjectMap.containsProjectForGav(dependencyGav))
-            {
+            if (gavToProjectMap.containsProjectForGav(dependencyGav)) {
                 final Project projectDependency = gavToProjectMap.getProject(dependencyGav);
                 dependencies_.add(projectDependency);
             }
@@ -267,18 +234,14 @@ public final class DefaultProject
         return dependencies_;
     }
 
-    private List<Project> findPluginDependencies()
-    {
+    private List<Project> findPluginDependencies() {
         final List<Project> dependencies_ = newArrayList();
         final List<Plugin> plugins = mavenProject.getBuildPlugins();
-        for (final Plugin plugin : plugins)
-        {
+        for (final Plugin plugin : plugins) {
             final List<Dependency> pluginDependencies = plugin.getDependencies();
-            for (final Dependency dependency : pluginDependencies)
-            {
+            for (final Dependency dependency : pluginDependencies) {
                 final Gav dependencyGav = gavGenerator.getGav(dependency);
-                if (gavToProjectMap.containsProjectForGav(dependencyGav))
-                {
+                if (gavToProjectMap.containsProjectForGav(dependencyGav)) {
                     final Project projectDependency = gavToProjectMap.getProject(dependencyGav);
                     dependencies_.add(projectDependency);
                 }
@@ -287,36 +250,27 @@ public final class DefaultProject
         return dependencies_;
     }
 
-    private List<Project> findModules()
-    {
+    private List<Project> findModules() {
         final List<Project> modules_ = newArrayList();
         final File baseDir = mavenProject.getBasedir();
-        for (final String moduleName : mavenProject.getModules())
-        {
+        for (final String moduleName : mavenProject.getModules()) {
             final File moduleFile = new File(baseDir, moduleName);
             final File modulePomFile;
-            if (moduleFile.isFile())
-            {
+            if (moduleFile.isFile()) {
                 modulePomFile = moduleFile;
-            }
-            else
-            {
+            } else {
                 modulePomFile = new File(moduleFile, "pom.xml");
             }
-            try
-            {
+            try {
                 final ProjectBuildingRequest request = session.getProjectBuildingRequest();
                 final ProjectBuildingResult projectBuildingResult = projectBuilder.build(modulePomFile, request);
                 final MavenProject mavenProjectModule = projectBuildingResult.getProject();
                 final Gav moduleGav = gavGenerator.getGav(mavenProjectModule);
-                if (gavToProjectMap.containsProjectForGav(moduleGav))
-                {
+                if (gavToProjectMap.containsProjectForGav(moduleGav)) {
                     final Project module = gavToProjectMap.getProject(moduleGav);
                     modules_.add(module);
                 }
-            }
-            catch (final ProjectBuildingException e)
-            {
+            } catch (final ProjectBuildingException e) {
                 throw new IllegalStateException(e.getMessage(), e);
             }
         }

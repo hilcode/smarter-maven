@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public interface Tree
-{
+public interface Tree {
     boolean isLeaf();
 
     boolean isBranch();
@@ -14,8 +13,7 @@ public interface Tree
 
     Branch asBranch();
 
-    public static enum LeafType
-    {
+    public static enum LeafType {
         START_PARENT,
         END_PARENT,
         START_DEPENDENCY,
@@ -29,115 +27,89 @@ public interface Tree
         START,
         TEXT,
         END,
-        //
-        ;
+    //
+    ;
     }
 
-    public static final class Leaf
-            implements
-                Tree
-    {
+    public static final class Leaf implements Tree {
         private final LeafType leafType;
         private final String text;
 
-        public Leaf(
-                final LeafType leafType,
-                final String text)
-        {
+        public Leaf(final LeafType leafType, final String text) {
             this.leafType = leafType;
             this.text = text;
         }
 
-        public LeafType getLeafType()
-        {
+        public LeafType getLeafType() {
             return leafType;
         }
 
-        public boolean isText()
-        {
+        public boolean isText() {
             return leafType == LeafType.TEXT;
         }
 
         @Override
-        public boolean isLeaf()
-        {
+        public boolean isLeaf() {
             return true;
         }
 
         @Override
-        public boolean isBranch()
-        {
+        public boolean isBranch() {
             return false;
         }
 
         @Override
-        public Leaf asLeaf()
-        {
+        public Leaf asLeaf() {
             return this;
         }
 
         @Override
-        public Branch asBranch()
-        {
+        public Branch asBranch() {
             throw new IllegalStateException("This is not a Tree.Branch.");
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             return "{" + leafType + "[" + text + "]}";
         }
     }
 
-    public static final class Branch
-            implements
-                Tree,
-                Iterable<Tree>
-    {
+    public static final class Branch implements Tree, Iterable<Tree> {
         private final List<Tree> leafsAndBranches = new ArrayList<Tree>();
 
-        public void addTree(
-                final Tree leafOrBranch)
-        {
+        public void addTree(final Tree leafOrBranch) {
             leafsAndBranches.add(leafOrBranch);
         }
 
         @Override
-        public boolean isLeaf()
-        {
+        public boolean isLeaf() {
             return false;
         }
 
         @Override
-        public boolean isBranch()
-        {
+        public boolean isBranch() {
             return true;
         }
 
         @Override
-        public Leaf asLeaf()
-        {
+        public Leaf asLeaf() {
             throw new IllegalStateException("This is not a Tree.Leaf.");
         }
 
         @Override
-        public Branch asBranch()
-        {
+        public Branch asBranch() {
             return this;
         }
 
         @Override
-        public Iterator<Tree> iterator()
-        {
+        public Iterator<Tree> iterator() {
             return leafsAndBranches.iterator();
         }
 
         @Override
-        public String toString()
-        {
+        public String toString() {
             final StringBuilder text = new StringBuilder();
-            for (final Tree leafOrBranch : this)
-            {
+            for (final Tree leafOrBranch : this) {
                 text.append(leafOrBranch.toString());
             }
             return text.toString();

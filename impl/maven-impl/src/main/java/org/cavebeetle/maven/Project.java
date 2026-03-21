@@ -9,13 +9,11 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code Project} represents a Maven project/artifact/dependency.
  */
-public interface Project
-{
+public interface Project {
     /**
      * A factory for {@code Project} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code Project}.
          *

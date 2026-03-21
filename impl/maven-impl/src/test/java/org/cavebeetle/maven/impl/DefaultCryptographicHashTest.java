@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import org.cavebeetle.io.InputStream;
 import org.cavebeetle.maven.Digest;
 import org.cavebeetle.maven.InternalApi;
@@ -17,8 +18,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The unit tests for {@code DefaultCryptographicHash}.
  */
-public final class DefaultCryptographicHashTest
-{
+public final class DefaultCryptographicHashTest {
     private InternalApi mockInternalApi;
     private DefaultCryptographicHash cryptographicHash;
 
@@ -26,8 +26,7 @@ public final class DefaultCryptographicHashTest
      * Sets up each unit test.
      */
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         mockInternalApi = mock(InternalApi.class);
         cryptographicHash = new DefaultCryptographicHash(mockInternalApi, MD5);
     }
@@ -36,15 +35,11 @@ public final class DefaultCryptographicHashTest
      * Tests that a missing {@code InternalApi} is handled correctly.
      */
     @Test
-    public final void a_missing_InternalApi_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_InternalApi_is_handled_correctly() {
+        try {
             new DefaultCryptographicHash(null, MD2);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'internalApi'.", e.getMessage());
         }
     }
@@ -53,15 +48,11 @@ public final class DefaultCryptographicHashTest
      * Tests that a missing {@code CryptographicHashAlgorithm} is handled correctly.
      */
     @Test
-    public final void a_missing_CryptographicHashAlgorithm_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_CryptographicHashAlgorithm_is_handled_correctly() {
+        try {
             new DefaultCryptographicHash(mockInternalApi, null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'cryptographicHashAlgorithm'.", e.getMessage());
         }
     }
@@ -70,15 +61,11 @@ public final class DefaultCryptographicHashTest
      * Tests that a missing {@code InputStream} in {@code CryptographicHash#generateDigest} is handled correctly.
      */
     @Test
-    public final void a_missing_InputStream_in_CryptographicHash_generateDigest_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_InputStream_in_CryptographicHash_generateDigest_is_handled_correctly() {
+        try {
             cryptographicHash.generateDigest((InputStream) null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'inputStream'.", e.getMessage());
         }
     }
@@ -88,8 +75,7 @@ public final class DefaultCryptographicHashTest
      */
     @Test
     @SuppressWarnings("boxing")
-    public final void a_Digest_is_created_from_an_InputStream()
-    {
+    public final void a_Digest_is_created_from_an_InputStream() {
         final InputStream mockInputStream = mock(InputStream.class);
         when(mockInputStream.read(any(byte[].class))).thenReturn(1, -1);
         final Digest mockDigest = mock(Digest.class);

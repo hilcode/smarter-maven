@@ -15,10 +15,7 @@ import org.cavebeetle.maven.Version;
  * The implementation of {@code GavGenerator}.
  */
 @Singleton
-public final class DefaultGavGenerator
-        implements
-            GavGenerator
-{
+public final class DefaultGavGenerator implements GavGenerator {
     private final InternalApi internalApi;
 
     /**
@@ -28,14 +25,12 @@ public final class DefaultGavGenerator
      *            the {@code InternalApi} instance.
      */
     @Inject
-    public DefaultGavGenerator(final InternalApi internalApi)
-    {
+    public DefaultGavGenerator(final InternalApi internalApi) {
         this.internalApi = internalApi;
     }
 
     @Override
-    public Gav getGav(final Dependency dependency)
-    {
+    public Gav getGav(final Dependency dependency) {
         final GroupId groupId = internalApi.newGroupId(dependency.getGroupId());
         final ArtifactId artifactId = internalApi.newArtifactId(dependency.getArtifactId());
         final Version version = internalApi.newVersion(dependency.getVersion());
@@ -43,8 +38,7 @@ public final class DefaultGavGenerator
     }
 
     @Override
-    public Gav getGav(final MavenProject mavenProject)
-    {
+    public Gav getGav(final MavenProject mavenProject) {
         final GroupId groupId = internalApi.newGroupId(mavenProject.getGroupId());
         final ArtifactId artifactId = internalApi.newArtifactId(mavenProject.getArtifactId());
         final Version version = internalApi.newVersion(mavenProject.getVersion());

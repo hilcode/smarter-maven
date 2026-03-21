@@ -7,8 +7,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code DirtDetector} detects whether a project is "dirty", i.e. whether it needs to be rebuilt.
  */
-public interface DirtDetector
-{
+public interface DirtDetector {
     /**
      * Determines whether the given project should be rebuilt.
      *

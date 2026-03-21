@@ -16,10 +16,7 @@ import org.codehaus.plexus.logging.Logger;
  * The implementation of {@code MavenExtension}.
  */
 @Singleton
-public final class DefaultMavenExtension
-        implements
-            MavenExtension
-{
+public final class DefaultMavenExtension implements MavenExtension {
     private final AfterSessionStart afterSessionStart;
     private final AfterProjectsRead afterProjectsRead;
 
@@ -30,8 +27,7 @@ public final class DefaultMavenExtension
      *            the {@code InternalApi} instance.
      */
     @Inject
-    public DefaultMavenExtension(final InternalApi internalApi)
-    {
+    public DefaultMavenExtension(final InternalApi internalApi) {
         afterSessionStart = internalApi.getAfterSessionStart();
         afterProjectsRead = internalApi.getAfterProjectsRead();
     }
@@ -41,8 +37,7 @@ public final class DefaultMavenExtension
             final Logger logger,
             final RuntimeInformation runtime,
             final MavenSession session,
-            final ProjectBuilder projectBuilder)
-    {
+            final ProjectBuilder projectBuilder) {
         afterProjectsRead.afterProjectsRead(logger, runtime, session, projectBuilder);
     }
 
@@ -51,8 +46,7 @@ public final class DefaultMavenExtension
             final MavenVersion version,
             final Logger logger,
             final RuntimeInformation runtime,
-            final MavenSession session)
-    {
+            final MavenSession session) {
         afterSessionStart.afterSessionStart(version, logger, runtime, session);
     }
 }

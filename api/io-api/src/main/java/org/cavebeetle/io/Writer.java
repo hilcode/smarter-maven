@@ -5,13 +5,11 @@ import java.io.File;
 /**
  * A {@code Writer} is a cleaned up version of {@code java.io.Writer}.
  */
-public interface Writer
-{
+public interface Writer {
     /**
      * A factory of {@code Writer} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code Writer}. It will write to a {@code StringBuilder}.
          *

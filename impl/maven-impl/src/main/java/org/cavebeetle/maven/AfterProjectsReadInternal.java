@@ -10,8 +10,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code AfterProjectsReadInternal} represents the steps that a {@code AfterProjectsRead} takes.
  */
-public interface AfterProjectsReadInternal
-{
+public interface AfterProjectsReadInternal {
     /**
      * Initializes the {@code GavToProjectMap}.
      *
@@ -23,10 +22,7 @@ public interface AfterProjectsReadInternal
      *            the {@code ProjectBuilder} instance.
      * @return an initialized {@code GavToProjectMap}.
      */
-    GavToProjectMap initializeGavToProjectMap(
-            Logger logger,
-            MavenSession mavenSession,
-            ProjectBuilder projectBuilder);
+    GavToProjectMap initializeGavToProjectMap(Logger logger, MavenSession mavenSession, ProjectBuilder projectBuilder);
 
     /**
      * Gets the {@code MavenExecutionRequest} for the current build.
@@ -40,9 +36,7 @@ public interface AfterProjectsReadInternal
      * @return the {@code MavenExecutionRequest} for the current build
      */
     MavenExecutionRequest getMavenExecutionRequest(
-            Logger logger,
-            MavenSession mavenSession,
-            GavToProjectMap gavToProjectMap);
+            Logger logger, MavenSession mavenSession, GavToProjectMap gavToProjectMap);
 
     /**
      * Collects the dirty projects from those available in the given {@code GavToProjectMap}.
@@ -55,10 +49,7 @@ public interface AfterProjectsReadInternal
      *            the {@code GavToProjectMap} instance.
      * @return the dirty projects from those available in the given {@code GavToProjectMap}.
      */
-    List<MavenProject> collectDirtyProjects(
-            Logger logger,
-            MavenSession mavenSession,
-            GavToProjectMap gavToProjectMap);
+    List<MavenProject> collectDirtyProjects(Logger logger, MavenSession mavenSession, GavToProjectMap gavToProjectMap);
 
     /**
      * Creates a dummy Maven project to create the correct output when nothing needs to be rebuilt.

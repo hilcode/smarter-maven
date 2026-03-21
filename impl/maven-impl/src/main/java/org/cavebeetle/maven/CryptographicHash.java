@@ -5,13 +5,11 @@ import org.cavebeetle.io.InputStream;
 /**
  * A {@code CryptographicHash} represents a cryptographic hash implementation.
  */
-public interface CryptographicHash
-{
+public interface CryptographicHash {
     /**
      * A factory for {@code CryptographicHash} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code CryptographicHash}.
          *

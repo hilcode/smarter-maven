@@ -6,8 +6,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * A {@code SnapshotDetector} detects whether a {@code Project} has a snapshot version.
  */
-public interface SnapshotDetector
-{
+public interface SnapshotDetector {
     /**
      * Returns whether the given {@code MavenProject} has a snapshot version.
      *

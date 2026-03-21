@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A {@code Digest} represents a hash.
  */
-public interface Digest
-{
+public interface Digest {
     /**
      * A factory of {@code Digest} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code Digest}.
          *
@@ -23,8 +21,7 @@ public interface Digest
     /**
      * Represents the digest of a missing (presumably deleted) file.
      */
-    Digest MISSING_FILE_DIGEST = new Digest()
-    {
-        // Empty.
-    };
+    Digest MISSING_FILE_DIGEST = new Digest() {
+                // Empty.
+            };
 }

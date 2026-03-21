@@ -2,6 +2,7 @@ package org.cavebeetle.maven.impl;
 
 import static com.google.common.collect.Lists.newLinkedList;
 import static com.google.common.collect.Sets.newHashSet;
+
 import java.util.Deque;
 import java.util.List;
 import java.util.Set;
@@ -26,10 +27,7 @@ import org.codehaus.plexus.logging.Logger;
  * The implementation of {@code MavenExecutionListener}.
  */
 @Singleton
-public final class DefaultMavenExecutionListener
-        implements
-            MavenExecutionListener
-{
+public final class DefaultMavenExecutionListener implements MavenExecutionListener {
     private final ActiveDetector activeDetector;
     private final GavGenerator gavGenerator;
     private final SourceFilesHashGenerator sourceFilesHashGenerator;
@@ -45,8 +43,7 @@ public final class DefaultMavenExecutionListener
      *            the {@code InternalApi} instance.
      */
     @Inject
-    public DefaultMavenExecutionListener(final InternalApi internalApi)
-    {
+    public DefaultMavenExecutionListener(final InternalApi internalApi) {
         activeDetector = internalApi.getActiveDetector();
         gavGenerator = internalApi.getGavGenerator();
         sourceFilesHashGenerator = internalApi.getSourceFilesHashGenerator();
@@ -54,72 +51,58 @@ public final class DefaultMavenExecutionListener
     }
 
     @Override
-    public void forkedProjectFailed(final ExecutionEvent event)
-    {
+    public void forkedProjectFailed(final ExecutionEvent event) {
         delegate.forkedProjectFailed(event);
     }
 
     @Override
-    public void forkedProjectStarted(final ExecutionEvent event)
-    {
+    public void forkedProjectStarted(final ExecutionEvent event) {
         delegate.forkedProjectStarted(event);
     }
 
     @Override
-    public void forkedProjectSucceeded(final ExecutionEvent event)
-    {
+    public void forkedProjectSucceeded(final ExecutionEvent event) {
         delegate.forkedProjectSucceeded(event);
     }
 
     @Override
-    public void forkFailed(final ExecutionEvent event)
-    {
+    public void forkFailed(final ExecutionEvent event) {
         delegate.forkFailed(event);
     }
 
     @Override
-    public void forkStarted(final ExecutionEvent event)
-    {
+    public void forkStarted(final ExecutionEvent event) {
         delegate.forkStarted(event);
     }
 
     @Override
-    public void forkSucceeded(final ExecutionEvent event)
-    {
+    public void forkSucceeded(final ExecutionEvent event) {
         delegate.forkSucceeded(event);
     }
 
     @Override
-    public void init(final Logger logger_, final MavenSession session, final GavToProjectMap gavToProjectMap_)
-    {
+    public void init(final Logger logger_, final MavenSession session, final GavToProjectMap gavToProjectMap_) {
         logger = logger_;
         delegate = session.getRequest().getExecutionListener();
         gavToProjectMap = gavToProjectMap_;
         final Set<Project> finishedProjects = newHashSet();
         final Deque<Project> projects = newLinkedList();
-        for (final Gav gav : gavToProjectMap)
-        {
+        for (final Gav gav : gavToProjectMap) {
             final Project project = gavToProjectMap.getProject(gav);
             projects.add(project);
         }
-        while (!projects.isEmpty())
-        {
+        while (!projects.isEmpty()) {
             final Project project = projects.pop();
             boolean dependenciesFinished = true;
-            for (final Project dependency : project.getDependencies())
-            {
-                if (!finishedProjects.contains(dependency))
-                {
+            for (final Project dependency : project.getDependencies()) {
+                if (!finishedProjects.contains(dependency)) {
                     dependenciesFinished = false;
                     break;
                 }
             }
-            if (!dependenciesFinished)
-            {
+            if (!dependenciesFinished) {
                 projects.addLast(project);
-            }
-            else
-            {
+            } else {
                 sourceFilesHashGenerator.generateUsingCache(project);
                 finishedProjects.add(project);
             }
@@ -127,67 +110,55 @@ public final class DefaultMavenExecutionListener
     }
 
     @Override
-    public void mojoFailed(final ExecutionEvent event)
-    {
+    public void mojoFailed(final ExecutionEvent event) {
         delegate.mojoFailed(event);
     }
 
     @Override
-    public void mojoSkipped(final ExecutionEvent event)
-    {
+    public void mojoSkipped(final ExecutionEvent event) {
         delegate.mojoSkipped(event);
     }
 
     @Override
-    public void mojoStarted(final ExecutionEvent event)
-    {
+    public void mojoStarted(final ExecutionEvent event) {
         delegate.mojoStarted(event);
     }
 
     @Override
-    public void mojoSucceeded(final ExecutionEvent event)
-    {
+    public void mojoSucceeded(final ExecutionEvent event) {
         delegate.mojoSucceeded(event);
     }
 
     @Override
-    public void projectDiscoveryStarted(final ExecutionEvent event)
-    {
+    public void projectDiscoveryStarted(final ExecutionEvent event) {
         delegate.projectDiscoveryStarted(event);
     }
 
     @Override
-    public void projectSkipped(final ExecutionEvent event)
-    {
+    public void projectSkipped(final ExecutionEvent event) {
         delegate.projectSkipped(event);
     }
 
     @Override
-    public void projectStarted(final ExecutionEvent event)
-    {
+    public void projectStarted(final ExecutionEvent event) {
         delegate.projectStarted(event);
     }
 
     @Override
-    public void projectFailed(final ExecutionEvent event)
-    {
+    public void projectFailed(final ExecutionEvent event) {
         delegate.projectFailed(event);
     }
 
     @Override
-    public void projectSucceeded(final ExecutionEvent event)
-    {
+    public void projectSucceeded(final ExecutionEvent event) {
         delegate.projectSucceeded(event);
         final MavenProject mavenProject = event.getSession().getCurrentProject();
-        if (activeDetector.isSmarterMavenActive(event.getSession()) && mavenProject.getArtifact() != null)
-        {
+        if (activeDetector.isSmarterMavenActive(event.getSession()) && mavenProject.getArtifact() != null) {
             final Gav gav = gavGenerator.getGav(mavenProject);
             final Project project = gavToProjectMap.getProject(gav);
             sourceFilesHashGenerator.generate(project);
-            for (final Project module : project.getModules())
-            {
-                if (module.isProjectWithoutDirectory())
-                {
+            for (final Project module : project.getModules()) {
+                if (module.isProjectWithoutDirectory()) {
                     sourceFilesHashGenerator.generate(module);
                 }
             }
@@ -195,20 +166,16 @@ public final class DefaultMavenExecutionListener
     }
 
     @Override
-    public void sessionStarted(final ExecutionEvent event)
-    {
+    public void sessionStarted(final ExecutionEvent event) {
         delegate.sessionStarted(event);
     }
 
     @Override
-    public void sessionEnded(final ExecutionEvent event)
-    {
+    public void sessionEnded(final ExecutionEvent event) {
         delegate.sessionEnded(event);
-        if (activeDetector.showProjectHierarchyWarnings(event.getSession()))
-        {
+        if (activeDetector.showProjectHierarchyWarnings(event.getSession())) {
             final List<String> warnings = invalidProjectHierarchyDetector.getProjectHierarchyWarnings(gavToProjectMap);
-            if (!warnings.isEmpty())
-            {
+            if (!warnings.isEmpty()) {
                 logger.warn("");
                 logger.warn("");
                 logger.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
@@ -216,8 +183,7 @@ public final class DefaultMavenExecutionListener
                 logger.warn("!!! PROJECT HIERARCHY WARNINGS !!!");
                 logger.warn("!!!                            !!!");
                 logger.warn("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                for (final String warning : warnings)
-                {
+                for (final String warning : warnings) {
                     logger.warn(warning);
                 }
                 logger.warn("");

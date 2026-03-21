@@ -5,15 +5,11 @@ import java.io.File;
 /**
  * A {@code TextFileReader} represents a cleaned up version of {@code java.io.LineNumberReader}.
  */
-public interface TextFileReader
-        extends
-            Iterable<String>
-{
+public interface TextFileReader extends Iterable<String> {
     /**
      * A factory for {@code TextFileReader} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code TextFileReader}.
          *

@@ -3,8 +3,7 @@ package org.cavebeetle.maven;
 /**
  * A {@code SourceFilesHashGenerator} facilitates generating digests for a group of source files.
  */
-public interface SourceFilesHashGenerator
-{
+public interface SourceFilesHashGenerator {
     /**
      * Generates a {@code Digest} for the source files of the given {@code Project}.
      *

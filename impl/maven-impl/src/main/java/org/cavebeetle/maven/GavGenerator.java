@@ -6,8 +6,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * A {@code GavGenerator} facilitates generating {@code Gav}s.
  */
-public interface GavGenerator
-{
+public interface GavGenerator {
     /**
      * <p>
      * Returns the GAV (groupId, artifactId, and version) for the given {@code Dependency}.

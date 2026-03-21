@@ -1,32 +1,31 @@
 package org.cavebeetle.io.impl;
 
-import java.io.File;
 import static java.io.File.createTempFile;
-import java.io.FileReader;
-import java.io.IOException;
 import static java.lang.Character.MIN_HIGH_SURROGATE;
 import static java.lang.Character.MIN_LOW_SURROGATE;
 import static java.lang.Character.MIN_SUPPLEMENTARY_CODE_POINT;
 import static java.lang.String.copyValueOf;
-
 import static org.cavebeetle.io.IoApi.END_OF_LINE;
-import org.cavebeetle.io.IoException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import org.cavebeetle.io.IoException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 /**
  * The unit tests for {@code DefaultFileWriter}.
  */
-public final class DefaultFileWriterTest
-{
+public final class DefaultFileWriterTest {
     private java.io.FileWriter mockDelegate;
     private DefaultFileWriter fileWriter;
     private String text;
@@ -35,8 +34,7 @@ public final class DefaultFileWriterTest
      * Sets up each unit test.
      */
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         mockDelegate = mock(java.io.FileWriter.class);
         fileWriter = new DefaultFileWriter(mockDelegate);
         text = "Hello World!";
@@ -49,16 +47,11 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void a_missing_file_is_handled_correctly()
-            throws IOException
-    {
-        try
-        {
+    public final void a_missing_file_is_handled_correctly() throws IOException {
+        try {
             new DefaultFileWriter((File) null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'file'.", e.getMessage());
         }
     }
@@ -70,17 +63,12 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void an_invalid_file_is_handled_correctly()
-            throws IOException
-    {
+    public final void an_invalid_file_is_handled_correctly() throws IOException {
         final File file = new File(".");
-        try
-        {
+        try {
             new DefaultFileWriter(file);
             fail("Expected an IoException.");
-        }
-        catch (final IoException e)
-        {
+        } catch (final IoException e) {
             assertTrue(e.getCause() instanceof IOException);
         }
     }
@@ -92,9 +80,7 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void a_complete_write_and_close_scenario_works()
-            throws IOException
-    {
+    public final void a_complete_write_and_close_scenario_works() throws IOException {
         final File file = createTempFile("dummy", "ignore");
         final DefaultFileWriter otherFileWriter = new DefaultFileWriter(file);
         otherFileWriter.write(text);
@@ -114,9 +100,7 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void closing_a_FileWriter_closes_its_delegate()
-            throws IOException
-    {
+    public final void closing_a_FileWriter_closes_its_delegate() throws IOException {
         fileWriter.close();
         verify(mockDelegate).close();
     }
@@ -128,18 +112,13 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void an_exception_thrown_while_closing_a_FileWriter_is_handled_correctly()
-            throws IOException
-    {
+    public final void an_exception_thrown_while_closing_a_FileWriter_is_handled_correctly() throws IOException {
         final Throwable oops = new IOException("Oops");
         doThrow(oops).when(mockDelegate).close();
-        try
-        {
+        try {
             fileWriter.close();
             fail("Expected an IoException.");
-        }
-        catch (final IoException e)
-        {
+        } catch (final IoException e) {
             assertSame(oops, e.getCause());
         }
     }
@@ -151,16 +130,11 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void a_missing_text_is_handled_correctly()
-            throws IOException
-    {
-        try
-        {
+    public final void a_missing_text_is_handled_correctly() throws IOException {
+        try {
             fileWriter.write(null);
             fail("Expected an NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'text'.", e.getMessage());
         }
     }
@@ -172,9 +146,7 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void writing_to_a_FileWriter_writes_to_its_delegate()
-            throws IOException
-    {
+    public final void writing_to_a_FileWriter_writes_to_its_delegate() throws IOException {
         fileWriter.write(text);
         verify(mockDelegate).write(text);
     }
@@ -186,9 +158,7 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void writing_a_line_to_a_FileWriter_writes_to_its_delegate()
-            throws IOException
-    {
+    public final void writing_a_line_to_a_FileWriter_writes_to_its_delegate() throws IOException {
         fileWriter.writeLine(text);
         verify(mockDelegate).write(eq(text + END_OF_LINE));
     }
@@ -200,18 +170,13 @@ public final class DefaultFileWriterTest
      *             if something goes wrong.
      */
     @Test
-    public final void an_exception_thrown_while_writing_to_a_FileWriter_is_handled_correctly()
-            throws IOException
-    {
+    public final void an_exception_thrown_while_writing_to_a_FileWriter_is_handled_correctly() throws IOException {
         final Throwable oops = new IOException("Oops");
         doThrow(oops).when(mockDelegate).write(text);
-        try
-        {
+        try {
             fileWriter.write(text);
             fail("Expected an IoException.");
-        }
-        catch (final IoException e)
-        {
+        } catch (final IoException e) {
             assertSame(oops, e.getCause());
         }
     }
@@ -224,8 +189,7 @@ public final class DefaultFileWriterTest
      */
     @Test
     public final void writing_a_single_character_code_point_to_a_FileWriter_writes_to_its_delegate()
-            throws IOException
-    {
+            throws IOException {
         fileWriter.write('a');
         verify(mockDelegate).write('a');
     }
@@ -238,8 +202,7 @@ public final class DefaultFileWriterTest
      */
     @Test
     public final void writing_a_double_character_code_point_to_a_FileWriter_writes_to_its_delegate()
-            throws IOException
-    {
+            throws IOException {
         final int codePoint = 0x10000;
         fileWriter.write(codePoint);
         final char highSurrogate =
@@ -257,17 +220,13 @@ public final class DefaultFileWriterTest
      */
     @Test
     public final void an_exception_thrown_while_writing_a_code_point_to_a_FileWriter_is_handled_correctly()
-            throws IOException
-    {
+            throws IOException {
         final Throwable oops = new IOException("Oops");
         doThrow(oops).when(mockDelegate).write('a');
-        try
-        {
+        try {
             fileWriter.write('a');
             fail("Expected an IoException.");
-        }
-        catch (final IoException e)
-        {
+        } catch (final IoException e) {
             assertSame(oops, e.getCause());
         }
     }

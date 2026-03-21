@@ -5,15 +5,11 @@ import java.io.File;
 /**
  * A {@code TextFile} represents a text file.
  */
-public interface TextFile
-        extends
-            Iterable<String>
-{
+public interface TextFile extends Iterable<String> {
     /**
      * A factory for {@code TextFile} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code TextFile}.
          *

@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -22,8 +23,7 @@ import org.junit.jupiter.api.Test;
 /**
  * The unit tests for {@code DefaultArtifactDetector}.
  */
-public final class DefaultArtifactDetectorTest
-{
+public final class DefaultArtifactDetectorTest {
     private MavenSession mockMavenSession;
     private MavenProject mockMavenProject;
     private DefaultArtifactDetector artifactDetector;
@@ -35,8 +35,7 @@ public final class DefaultArtifactDetectorTest
      * Sets up each unit test.
      */
     @BeforeEach
-    public void setUp()
-    {
+    public void setUp() {
         mockMavenSession = mock(MavenSession.class);
         mockMavenProject = mock(MavenProject.class);
         artifactDetector = new DefaultArtifactDetector();
@@ -54,15 +53,11 @@ public final class DefaultArtifactDetectorTest
      * correctly.
      */
     @Test
-    public final void a_missing_MavenVersion_in_ArtifactDetector_hasArtifactInLocalRepository_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_MavenVersion_in_ArtifactDetector_hasArtifactInLocalRepository_is_handled_correctly() {
+        try {
             artifactDetector.hasArtifactInLocalRepository(null, mockMavenProject);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenSession'.", e.getMessage());
         }
     }
@@ -72,15 +67,11 @@ public final class DefaultArtifactDetectorTest
      * correctly.
      */
     @Test
-    public final void a_missing_MavenProject_in_ArtifactDetector_hasArtifactInLocalRepository_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_MavenProject_in_ArtifactDetector_hasArtifactInLocalRepository_is_handled_correctly() {
+        try {
             artifactDetector.hasArtifactInLocalRepository(mockMavenSession, null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenProject'.", e.getMessage());
         }
     }
@@ -90,15 +81,11 @@ public final class DefaultArtifactDetectorTest
      * correctly.
      */
     @Test
-    public final void a_missing_MavenProject_in_ArtifactDetector_hasArtifactInRemoteRepository_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_MavenProject_in_ArtifactDetector_hasArtifactInRemoteRepository_is_handled_correctly() {
+        try {
             artifactDetector.hasArtifactInRemoteRepository(null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenProject'.", e.getMessage());
         }
     }
@@ -107,8 +94,7 @@ public final class DefaultArtifactDetectorTest
      * Tests that an artifact that does not exist is not found.
      */
     @Test
-    public final void an_artifact_that_does_not_exist_is_not_found()
-    {
+    public final void an_artifact_that_does_not_exist_is_not_found() {
         final String localRepository = getProperty("java.io.tmpdir");
         when(mockArtifactRepository.getBasedir()).thenReturn(localRepository);
         when(mockArtifactRepository.pathOf(mockArtifact)).thenReturn(localRepository + "/does-not-exist");
@@ -119,8 +105,7 @@ public final class DefaultArtifactDetectorTest
      * Tests that an artifact that exists is found.
      */
     @Test
-    public final void an_artifact_that_exists_is_found()
-    {
+    public final void an_artifact_that_exists_is_found() {
         final String localRepository = getProperty("java.io.tmpdir");
         final File artifactFile = createRandomJar(localRepository);
         when(mockArtifactRepository.getBasedir()).thenReturn(localRepository);
@@ -132,8 +117,7 @@ public final class DefaultArtifactDetectorTest
      * Tests that an artifact that is not available is not found.
      */
     @Test
-    public final void an_artifact_that_is_not_available_is_not_found()
-    {
+    public final void an_artifact_that_is_not_available_is_not_found() {
         when(mockArtifact.getVersion()).thenReturn("4");
         final List<String> artifactVersions = newArrayList("1", "2", "3");
         when(mockArtifactRepository.findVersions(mockArtifact)).thenReturn(artifactVersions);
@@ -144,24 +128,19 @@ public final class DefaultArtifactDetectorTest
      * Tests that an artifact that is available is found.
      */
     @Test
-    public final void an_artifact_that_is_available_is_found()
-    {
+    public final void an_artifact_that_is_available_is_found() {
         when(mockArtifact.getVersion()).thenReturn("3");
         final List<String> artifactVersions = newArrayList("1", "2", "3");
         when(mockArtifactRepository.findVersions(mockArtifact)).thenReturn(artifactVersions);
         assertTrue(artifactDetector.hasArtifactInRemoteRepository(mockMavenProject));
     }
 
-    private File createRandomJar(final String localRepository)
-    {
-        try
-        {
+    private File createRandomJar(final String localRepository) {
+        try {
             final File localRepositoryDir = new File(localRepository);
             final File artifactFile = createTempFile("artifact-", ".jar", localRepositoryDir);
             return artifactFile;
-        }
-        catch (final IOException e)
-        {
+        } catch (final IOException e) {
             throw new IllegalStateException(e);
         }
     }
