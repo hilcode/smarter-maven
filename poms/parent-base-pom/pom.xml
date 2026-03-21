@@ -47,12 +47,12 @@
         <maven.main.version>3.9.12</maven.main.version>
 
         <guava.version>33.5.0-jre</guava.version>
+        <guice.version>5.1.0</guice.version>
         <javax.inject.version>1</javax.inject.version>
         <junit.version>5.9.1</junit.version>
         <maven-compat.version>${maven.main.version}</maven-compat.version>
         <maven-core.version>${maven.main.version}</maven-core.version>
         <mockito-core.version>5.23.0</mockito-core.version>
-        <sisu-guice.version>4.2.0</sisu-guice.version>
         <slf4j.version>1.7.36</slf4j.version>
 
         <build-helper-maven-plugin.version>3.6.1</build-helper-maven-plugin.version>
@@ -93,6 +93,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>${guice.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
                 <version>${javax.inject.version}</version>
@@ -108,12 +114,6 @@
                 <groupId>org.apache.maven</groupId>
                 <artifactId>maven-core</artifactId>
                 <version>${maven-core.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.sonatype.sisu</groupId>
-                <artifactId>sisu-guice</artifactId>
-                <version>${sisu-guice.version}</version>
             </dependency>
 
             <!-- Scope 'test' -->
