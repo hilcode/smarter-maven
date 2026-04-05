@@ -25,13 +25,13 @@
     <parent>
         <groupId>org.cavebeetle.maven</groupId>
         <artifactId>parent-base-pom</artifactId>
-        <version>2-SNAPSHOT</version>
+        <version>2</version>
         <relativePath>../parent-base-pom</relativePath>
     </parent>
 
     <groupId>org.cavebeetle</groupId>
     <artifactId>parent-pom</artifactId>
-    <version>3-SNAPSHOT</version>
+    <version>3</version>
     <packaging>pom</packaging>
 
     <name>Parent POM</name>
