@@ -3,8 +3,7 @@ package org.cavebeetle.maven;
 /**
  * A {@code GavTuple} stores both a project's GAV, and the GAV of one of its dependencies.
  */
-public final class GavTuple
-{
+public final class GavTuple {
     private final Gav projectGav;
     private final Gav dependencyGav;
 
@@ -16,8 +15,7 @@ public final class GavTuple
      * @param dependencyGav
      *            the dependency's GAV.
      */
-    public GavTuple(final Gav projectGav, final Gav dependencyGav)
-    {
+    public GavTuple(final Gav projectGav, final Gav dependencyGav) {
         this.projectGav = projectGav;
         this.dependencyGav = dependencyGav;
     }
@@ -27,8 +25,7 @@ public final class GavTuple
      *
      * @return the {@code Project}'s GAV.
      */
-    public Gav getProjectGav()
-    {
+    public Gav getProjectGav() {
         return projectGav;
     }
 
@@ -37,14 +34,12 @@ public final class GavTuple
      *
      * @return the dependency's GAV.
      */
-    public Gav getDependencyGav()
-    {
+    public Gav getDependencyGav() {
         return dependencyGav;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "( " + projectGav + " --> " + dependencyGav + " )";
     }
 }

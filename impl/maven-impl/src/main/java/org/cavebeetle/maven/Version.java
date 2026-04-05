@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A project's version.
  */
-public interface Version
-{
+public interface Version {
     /**
      * The constructor API for {@code Version}.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code Version}.
          *

@@ -1,13 +1,13 @@
 package org.cavebeetle.maven;
 
 import static java.security.MessageDigest.getInstance;
+
 import java.security.MessageDigest;
 
 /**
  * The list of available cryptographic hash algorithms.
  */
-public enum CryptographicHashAlgorithm
-{
+public enum CryptographicHashAlgorithm {
     /** MD2 */
     MD2("MD2"),
     /** MD5 */
@@ -27,22 +27,17 @@ public enum CryptographicHashAlgorithm
      *            the algorithm to be used by the requested {@code MessageDigest}.
      * @return a new {@code MessageDigest}.
      */
-    public static final MessageDigest newMessageDigest(final String algorithmName)
-    {
-        try
-        {
+    public static final MessageDigest newMessageDigest(final String algorithmName) {
+        try {
             return getInstance(algorithmName);
-        }
-        catch (final Exception e)
-        {
+        } catch (final Exception e) {
             throw new IllegalStateException(e);
         }
     }
 
     private final String algorithmName;
 
-    private CryptographicHashAlgorithm(final String algorithmName)
-    {
+    private CryptographicHashAlgorithm(final String algorithmName) {
         this.algorithmName = algorithmName;
     }
 
@@ -51,14 +46,12 @@ public enum CryptographicHashAlgorithm
      *
      * @return a new {@code MessageDigest}.
      */
-    public MessageDigest newMessageDigest()
-    {
+    public MessageDigest newMessageDigest() {
         return newMessageDigest(algorithmName);
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return algorithmName;
     }
 }

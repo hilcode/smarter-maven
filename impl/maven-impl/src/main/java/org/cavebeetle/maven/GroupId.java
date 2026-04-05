@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A project's group id.
  */
-public interface GroupId
-{
+public interface GroupId {
     /**
      * The constructor API for {@code GroupId}.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code GroupId}.
          *

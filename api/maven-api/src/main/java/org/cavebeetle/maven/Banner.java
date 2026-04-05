@@ -8,8 +8,7 @@ package org.cavebeetle.maven;
  * |___/_|_|_\__,_|_|  \__\___|_|   |_|  |_\__,_|\_/\___|_||_|
  * </pre>
  */
-public interface Banner
-{
+public interface Banner {
     /**
      * The banner to display when starting the Smarter Maven extension.
      */

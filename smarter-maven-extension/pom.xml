@@ -25,13 +25,13 @@
     <parent>
         <groupId>org.cavebeetle</groupId>
         <artifactId>parent-java-pom</artifactId>
-        <version>2</version>
+        <version>3</version>
         <relativePath>../poms/parent-java-pom</relativePath>
     </parent>
 
     <groupId>org.cavebeetle.maven</groupId>
     <artifactId>smarter-maven-extension</artifactId>
-    <version>3.1</version>
+    <version>3.2</version>
 
     <name>Smarter Maven Extension</name>
 
@@ -41,25 +41,25 @@
         <dependency>
             <groupId>org.cavebeetle.io</groupId>
             <artifactId>io-api</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.cavebeetle.io</groupId>
             <artifactId>io-impl</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.cavebeetle.maven</groupId>
             <artifactId>maven-api</artifactId>
-            <version>3.0</version>
+            <version>3.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.cavebeetle.maven</groupId>
             <artifactId>maven-impl</artifactId>
-            <version>3.1</version>
+            <version>3.2</version>
         </dependency>
 
         <!-- Scope 'provided' -->
@@ -76,8 +76,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.sonatype.sisu</groupId>
-            <artifactId>sisu-guice</artifactId>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
             <scope>provided</scope>
         </dependency>
 
@@ -175,6 +175,17 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <filters>
+                                <filter>
+                                    <artifact>*.*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"/>
+                            </transformers>
                         </configuration>
                     </execution>
 

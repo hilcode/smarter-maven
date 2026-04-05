@@ -5,13 +5,11 @@ import java.io.File;
 /**
  * An {@code InputStream} represents a cleaned up version of {@code java.io.InputStream}.
  */
-public interface InputStream
-{
+public interface InputStream {
     /**
      * A factory for {@code InputStream} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code InputStream}.
          *

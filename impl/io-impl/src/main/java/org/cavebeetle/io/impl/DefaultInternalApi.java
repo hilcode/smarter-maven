@@ -1,6 +1,8 @@
 package org.cavebeetle.io.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.inject.Injector;
 import java.io.File;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -11,16 +13,12 @@ import org.cavebeetle.io.SourceFiles;
 import org.cavebeetle.io.StringWriter;
 import org.cavebeetle.io.TextFile;
 import org.cavebeetle.io.TextFileReader;
-import com.google.inject.Injector;
 
 /**
  * The implementation of {@code InternalApi}.
  */
 @Singleton
-public final class DefaultInternalApi
-        implements
-            InternalApi
-{
+public final class DefaultInternalApi implements InternalApi {
     private final Injector injector;
 
     /**
@@ -30,63 +28,53 @@ public final class DefaultInternalApi
      *            the Guice {@code Injector} instance.
      */
     @Inject
-    public DefaultInternalApi(final Injector injector)
-    {
+    public DefaultInternalApi(final Injector injector) {
         checkNotNull(injector, "Missing 'injector'.");
         this.injector = injector;
     }
 
     @Override
-    public InputStream newInputStream(final File file)
-    {
+    public InputStream newInputStream(final File file) {
         return injector.getInstance(InputStream.Builder.class).newInputStream(file);
     }
 
     @Override
-    public InputStream newInputStream(final String text)
-    {
+    public InputStream newInputStream(final String text) {
         return injector.getInstance(InputStream.Builder.class).newInputStream(text);
     }
 
     @Override
-    public SourceFiles newSourceFiles(final File baseDir)
-    {
+    public SourceFiles newSourceFiles(final File baseDir) {
         return injector.getInstance(SourceFiles.Builder.class).newSourceFiles(baseDir);
     }
 
     @Override
-    public SourceFiles newSourceFilesForProjectWithoutDirectory(final File pomFile)
-    {
+    public SourceFiles newSourceFilesForProjectWithoutDirectory(final File pomFile) {
         return injector.getInstance(SourceFiles.Builder.class).newSourceFilesForProjectWithoutDirectory(pomFile);
     }
 
     @Override
-    public StringWriter newWriter()
-    {
+    public StringWriter newWriter() {
         return injector.getInstance(StringWriter.Builder.class).newWriter();
     }
 
     @Override
-    public FileWriter newWriter(final File file)
-    {
+    public FileWriter newWriter(final File file) {
         return injector.getInstance(FileWriter.Builder.class).newWriter(file);
     }
 
     @Override
-    public TextFileReader newTextFileReader(final File file)
-    {
+    public TextFileReader newTextFileReader(final File file) {
         return injector.getInstance(TextFileReader.Builder.class).newTextFileReader(file);
     }
 
     @Override
-    public TextFileReader newTextFileReader(final String text)
-    {
+    public TextFileReader newTextFileReader(final String text) {
         return injector.getInstance(TextFileReader.Builder.class).newTextFileReader(text);
     }
 
     @Override
-    public TextFile newTextFile(final File file)
-    {
+    public TextFile newTextFile(final File file) {
         return injector.getInstance(TextFile.Builder.class).newTextFile(file);
     }
 }

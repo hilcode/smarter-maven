@@ -1,5 +1,6 @@
 package org.cavebeetle.io.impl;
 
+import com.google.inject.AbstractModule;
 import org.cavebeetle.io.FileWriter;
 import org.cavebeetle.io.InputStream;
 import org.cavebeetle.io.InternalApi;
@@ -8,18 +9,13 @@ import org.cavebeetle.io.SourceFiles;
 import org.cavebeetle.io.StringWriter;
 import org.cavebeetle.io.TextFile;
 import org.cavebeetle.io.TextFileReader;
-import com.google.inject.AbstractModule;
 
 /**
  * The Guice module for {@code org.cavebeetle.io}.
  */
-public final class IoGuiceModule
-        extends
-            AbstractModule
-{
+public final class IoGuiceModule extends AbstractModule {
     @Override
-    public void configure()
-    {
+    public void configure() {
         bind(FileWriter.Builder.class).to(DefaultFileWriter.DefaultBuilder.class);
         bind(InputStream.Builder.class).to(DefaultInputStream.DefaultBuilder.class);
         bind(InternalApi.class).to(DefaultInternalApi.class);

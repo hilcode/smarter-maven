@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * The available reasons why a project is considered dirty.
  */
-public interface DirtyReason
-{
+public interface DirtyReason {
     /**
      * A factory of {@code Gav} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code DirtyReason}.
          *
@@ -23,47 +21,38 @@ public interface DirtyReason
     }
 
     /** Published. */
-    DirtyReason PUBLISHED = new DirtyReason()
-    {
+    DirtyReason PUBLISHED = new DirtyReason() {
         @Override
-        public boolean isDirty()
-        {
+        public boolean isDirty() {
             return false;
         }
 
         @Override
-        public String getReason()
-        {
+        public String getReason() {
             return "Published";
         }
     };
     /** Changes detected. */
-    DirtyReason CHANGES_DETECTED = new DirtyReason()
-    {
+    DirtyReason CHANGES_DETECTED = new DirtyReason() {
         @Override
-        public boolean isDirty()
-        {
+        public boolean isDirty() {
             return true;
         }
 
         @Override
-        public String getReason()
-        {
+        public String getReason() {
             return "Changes detected";
         }
     };
     /** Not dirty. */
-    DirtyReason NOT_DIRTY = new DirtyReason()
-    {
+    DirtyReason NOT_DIRTY = new DirtyReason() {
         @Override
-        public boolean isDirty()
-        {
+        public boolean isDirty() {
             return false;
         }
 
         @Override
-        public String getReason()
-        {
+        public String getReason() {
             return "";
         }
     };

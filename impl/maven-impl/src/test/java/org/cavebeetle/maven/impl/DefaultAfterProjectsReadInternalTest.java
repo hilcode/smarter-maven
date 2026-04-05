@@ -3,13 +3,14 @@ package org.cavebeetle.maven.impl;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.cavebeetle.maven.DirtyReason.CHANGES_DETECTED;
 import static org.cavebeetle.maven.DirtyReason.NOT_DIRTY;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import java.util.List;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.MavenSession;
@@ -22,21 +23,18 @@ import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.MavenExecutionListener;
 import org.cavebeetle.maven.Project;
 import org.codehaus.plexus.logging.Logger;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultAfterProjectsReadInternal}.
  */
-public final class DefaultAfterProjectsReadInternalTest
-{
-    private static final class Tuple
-    {
+public final class DefaultAfterProjectsReadInternalTest {
+    private static final class Tuple {
         public final Gav GAV;
         public final Project PROJECT;
 
-        public Tuple(final Gav gav, final Project project)
-        {
+        public Tuple(final Gav gav, final Project project) {
             GAV = gav;
             PROJECT = project;
         }
@@ -54,9 +52,8 @@ public final class DefaultAfterProjectsReadInternalTest
     /**
      * Sets up each unit test.
      */
-    @Before
-    public void setUp()
-    {
+    @BeforeEach
+    public void setUp() {
         mockInternalApi = mock(InternalApi.class);
         mockGavGenerator = mock(GavGenerator.class);
         when(mockInternalApi.getGavGenerator()).thenReturn(mockGavGenerator);
@@ -74,15 +71,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that a missing {@code InternalApi} is handled correctly.
      */
     @Test
-    public final void a_missing_InternalApi_is_handled_correctly()
-    {
-        try
-        {
-            new DefaultAfterProjectsReadInternal(null);
+    public final void a_missing_InternalApi_is_handled_correctly() {
+        try {
+            @SuppressWarnings("unused")
+            var ignored = new DefaultAfterProjectsReadInternal(null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'internalApi'.", e.getMessage());
         }
     }
@@ -92,15 +86,11 @@ public final class DefaultAfterProjectsReadInternalTest
      * correctly.
      */
     @Test
-    public final void a_missing_Logger_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_Logger_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly() {
+        try {
             afterProjectsRead.initializeGavToProjectMap(null, mockMavenSession, mockProjectBuilder);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'logger'.", e.getMessage());
         }
     }
@@ -110,15 +100,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * handled correctly.
      */
     @Test
-    public final void a_missing_MavenSession_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_MavenSession_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly() {
+        try {
             afterProjectsRead.initializeGavToProjectMap(mockLogger, null, mockProjectBuilder);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenSession'.", e.getMessage());
         }
     }
@@ -128,15 +115,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * handled correctly.
      */
     @Test
-    public final void a_missing_ProjectBuilder_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_ProjectBuilder_in_AfterProjectsReadInternal_initializeGavToProjectMap_is_handled_correctly() {
+        try {
             afterProjectsRead.initializeGavToProjectMap(mockLogger, mockMavenSession, null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'projectBuilder'.", e.getMessage());
         }
     }
@@ -146,15 +130,11 @@ public final class DefaultAfterProjectsReadInternalTest
      * correctly.
      */
     @Test
-    public final void a_missing_Logger_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_Logger_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly() {
+        try {
             afterProjectsRead.getMavenExecutionRequest(null, mockMavenSession, mockGavToProjectMap);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'logger'.", e.getMessage());
         }
     }
@@ -164,15 +144,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * handled correctly.
      */
     @Test
-    public final void a_missing_MavenSession_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_MavenSession_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly() {
+        try {
             afterProjectsRead.getMavenExecutionRequest(mockLogger, null, mockGavToProjectMap);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenSession'.", e.getMessage());
         }
     }
@@ -182,15 +159,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * handled correctly.
      */
     @Test
-    public final void a_missing_GavToProjectMap_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_GavToProjectMap_in_AfterProjectsReadInternal_getMavenExecutionRequest_is_handled_correctly() {
+        try {
             afterProjectsRead.getMavenExecutionRequest(mockLogger, mockMavenSession, null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'gavToProjectMap'.", e.getMessage());
         }
     }
@@ -200,15 +174,11 @@ public final class DefaultAfterProjectsReadInternalTest
      * correctly.
      */
     @Test
-    public final void a_missing_MavenSession_in_AfterProjectsReadInternal_collectDirtyProjects_is_handled_correctly()
-    {
-        try
-        {
+    public final void a_missing_MavenSession_in_AfterProjectsReadInternal_collectDirtyProjects_is_handled_correctly() {
+        try {
             afterProjectsRead.collectDirtyProjects(mockLogger, null, mockGavToProjectMap);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'mavenSession'.", e.getMessage());
         }
     }
@@ -218,15 +188,12 @@ public final class DefaultAfterProjectsReadInternalTest
      * correctly.
      */
     @Test
-    public final void a_missing_GavToProjectMap_in_AfterProjectsReadInternal_collectDirtyProjects_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_GavToProjectMap_in_AfterProjectsReadInternal_collectDirtyProjects_is_handled_correctly() {
+        try {
             afterProjectsRead.collectDirtyProjects(mockLogger, mockMavenSession, null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'gavToProjectMap'.", e.getMessage());
         }
     }
@@ -235,8 +202,7 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that the {@code GavToProjectMap} is initialized correctly with 1 available {@code MavenProject}.
      */
     @Test
-    public final void the_GavToProjectMap_is_initialized_correctly_with_1_available_MavenProject()
-    {
+    public final void the_GavToProjectMap_is_initialized_correctly_with_1_available_MavenProject() {
         final List<Tuple> tuples = init(1);
         final GavToProjectMap gavToProjectMap =
                 afterProjectsRead.initializeGavToProjectMap(mockLogger, mockMavenSession, mockProjectBuilder);
@@ -247,8 +213,7 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that the {@code GavToProjectMap} is initialized correctly with 2 available {@code MavenProject}s.
      */
     @Test
-    public final void the_GavToProjectMap_is_initialized_correctly_with_2_available_MavenProjects()
-    {
+    public final void the_GavToProjectMap_is_initialized_correctly_with_2_available_MavenProjects() {
         final List<Tuple> tuples = init(2);
         final GavToProjectMap gavToProjectMap =
                 afterProjectsRead.initializeGavToProjectMap(mockLogger, mockMavenSession, mockProjectBuilder);
@@ -259,8 +224,7 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that the {@code GavToProjectMap} is initialized correctly with 3 available {@code MavenProject}s.
      */
     @Test
-    public final void the_GavToProjectMap_is_initialized_correctly_with_3_available_MavenProjects()
-    {
+    public final void the_GavToProjectMap_is_initialized_correctly_with_3_available_MavenProjects() {
         final List<Tuple> tuples = init(3);
         final GavToProjectMap gavToProjectMap =
                 afterProjectsRead.initializeGavToProjectMap(mockLogger, mockMavenSession, mockProjectBuilder);
@@ -271,8 +235,7 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that the {@code MavenExecutionListener} and {@code MavenExecutionRequest} are initialized correctly.
      */
     @Test
-    public final void the_MavenExecutionListener_and_MavenExecutionRequest_are_initialized_correctly()
-    {
+    public final void the_MavenExecutionListener_and_MavenExecutionRequest_are_initialized_correctly() {
         final MavenExecutionRequest mockMavenExecutionRequest = mock(MavenExecutionRequest.class);
         when(mockMavenSession.getRequest()).thenReturn(mockMavenExecutionRequest);
         final MavenExecutionRequest mavenExecutionRequest =
@@ -286,12 +249,10 @@ public final class DefaultAfterProjectsReadInternalTest
      * Tests that collecting dirty projects works correctly.
      */
     @Test
-    public final void collecting_dirty_projects_works_correctly()
-    {
+    public final void collecting_dirty_projects_works_correctly() {
         final List<Gav> mavenProjectGavs = newArrayList();
         final List<MavenProject> mavenProjects = newArrayList();
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             final MavenProject mockMavenProject = mock(MavenProject.class);
             final Gav mockProjectGav = mock(Gav.class);
             when(mockGavGenerator.getGav(mockMavenProject)).thenReturn(mockProjectGav);
@@ -310,69 +271,45 @@ public final class DefaultAfterProjectsReadInternalTest
         assertSame(mavenProjects.get(2), dirtyProjects.get(1));
     }
 
-    /**
-     * Tests that creating a dummy Maven project works correctly.
-     */
-    @Test
-    public final void test_dummy()
-    {
-        final MavenProject dummyMavenProject = afterProjectsRead.createDummyProjectToIndicateNothingToDo();
-        assertEquals("nothing", dummyMavenProject.getArtifactId());
-        assertEquals("(everything is up-to-date).", dummyMavenProject.getVersion());
-    }
-
-    private List<Tuple> init(final int count)
-    {
+    private List<Tuple> init(final int count) {
         final List<MavenProject> mavenProjects = createMavenProjects(count);
         when(mockMavenSession.getProjects()).thenReturn(mavenProjects);
         final List<Tuple> tuples = createTuples(mavenProjects);
         return tuples;
     }
 
-    private void verifyResult(final List<Tuple> tuples, final GavToProjectMap gavToProjectMap)
-    {
+    private void verifyResult(final List<Tuple> tuples, final GavToProjectMap gavToProjectMap) {
         assertSame(mockGavToProjectMap, gavToProjectMap);
-        for (final Tuple tuple : tuples)
-        {
+        for (final Tuple tuple : tuples) {
             verify(mockGavToProjectMap).putProject(tuple.GAV, tuple.PROJECT);
         }
     }
 
-    private List<MavenProject> createMavenProjects(final int count)
-    {
+    private List<MavenProject> createMavenProjects(final int count) {
         final List<MavenProject> mockMavenProjects = newArrayList();
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             final MavenProject mockMavenProject = mock(MavenProject.class);
             mockMavenProjects.add(mockMavenProject);
         }
         return mockMavenProjects;
     }
 
-    private List<Tuple> createTuples(final List<MavenProject> mavenProjects)
-    {
+    private List<Tuple> createTuples(final List<MavenProject> mavenProjects) {
         final List<Tuple> tuples = newArrayList();
-        for (final MavenProject mavenProject : mavenProjects)
-        {
+        for (final MavenProject mavenProject : mavenProjects) {
             final Tuple tuple = mockProject(mavenProject);
             tuples.add(tuple);
         }
         return tuples;
     }
 
-    private Tuple mockProject(final MavenProject mockMavenProject)
-    {
+    private Tuple mockProject(final MavenProject mockMavenProject) {
         final Gav mockProjectGav = mock(Gav.class);
         when(mockGavGenerator.getGav(mockMavenProject)).thenReturn(mockProjectGav);
         final Project mockProject = mock(Project.class);
-        when(
-                mockInternalApi
-                        .newProject(mockLogger,
-                                mockMavenSession,
-                                mockProjectBuilder,
-                                mockMavenProject,
-                                mockGavToProjectMap))
-                                        .thenReturn(mockProject);
+        when(mockInternalApi.newProject(
+                        mockLogger, mockMavenSession, mockProjectBuilder, mockMavenProject, mockGavToProjectMap))
+                .thenReturn(mockProject);
         return new Tuple(mockProjectGav, mockProject);
     }
 }

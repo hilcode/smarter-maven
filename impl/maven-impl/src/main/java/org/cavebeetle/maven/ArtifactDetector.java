@@ -7,8 +7,7 @@ import org.apache.maven.project.MavenProject;
 /**
  * An {@code ArtifactDetector} detects whether a project is available in the local repository.
  */
-public interface ArtifactDetector
-{
+public interface ArtifactDetector {
     /**
      * Returns whether the given project is available in the local repository.
      *

@@ -2,7 +2,6 @@ package org.cavebeetle.maven.plugins;
 
 import javax.xml.stream.Location;
 
-public interface HasLocation
-{
+public interface HasLocation {
     Location getLocation();
 }

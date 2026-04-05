@@ -1,29 +1,28 @@
 package org.cavebeetle.maven.impl;
 
 import static org.cavebeetle.maven.CryptographicHashAlgorithm.SHA1;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
+
 import org.cavebeetle.maven.CryptographicHash;
 import org.cavebeetle.maven.InternalApi;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultCryptographicHash.DefaultBuilder}.
  */
-public final class DefaultCryptographicHashDefaultBuilderTest
-{
+public final class DefaultCryptographicHashDefaultBuilderTest {
     private InternalApi mockInternalApi;
     private DefaultCryptographicHash.DefaultBuilder cryptographicHashBuilder;
 
     /**
      * Sets up each unit test.
      */
-    @Before
-    public void setUp()
-    {
+    @BeforeEach
+    public void setUp() {
         mockInternalApi = mock(InternalApi.class);
         cryptographicHashBuilder = new DefaultCryptographicHash.DefaultBuilder(mockInternalApi);
     }
@@ -32,15 +31,12 @@ public final class DefaultCryptographicHashDefaultBuilderTest
      * Tests that a missing {@code InternalApi} is handled correctly.
      */
     @Test
-    public final void a_missing_InternalApi_is_handled_correctly()
-    {
-        try
-        {
-            new DefaultCryptographicHash.DefaultBuilder(null);
+    public final void a_missing_InternalApi_is_handled_correctly() {
+        try {
+            @SuppressWarnings("unused")
+            var ignored = new DefaultCryptographicHash.DefaultBuilder(null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'internalApi'.", e.getMessage());
         }
     }
@@ -50,15 +46,12 @@ public final class DefaultCryptographicHashDefaultBuilderTest
      * handled correctly.
      */
     @Test
-    public final void a_missing_CryptographicHashAlgorithm_in_CryptographicHash_Builder_newCryptographicHash_is_handled_correctly()
-    {
-        try
-        {
+    public final void
+            a_missing_CryptographicHashAlgorithm_in_CryptographicHash_Builder_newCryptographicHash_is_handled_correctly() {
+        try {
             cryptographicHashBuilder.newCryptographicHash(null);
             fail("Expected a NullPointerException.");
-        }
-        catch (final NullPointerException e)
-        {
+        } catch (final NullPointerException e) {
             assertEquals("Missing 'cryptographicHashAlgorithm'.", e.getMessage());
         }
     }
@@ -67,8 +60,7 @@ public final class DefaultCryptographicHashDefaultBuilderTest
      * Tests that creating a new {@code CryptographicHash} returns a {@code CryptographicHash} instance.
      */
     @Test
-    public final void creating_a_new_CryptographicHash_returns_a_CryptographicHash_instance()
-    {
+    public final void creating_a_new_CryptographicHash_returns_a_CryptographicHash_instance() {
         final CryptographicHash cryptographicHash = cryptographicHashBuilder.newCryptographicHash(SHA1);
         assertNotNull(cryptographicHash);
     }

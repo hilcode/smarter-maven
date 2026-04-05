@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableList.copyOf;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.Collections.sort;
+
+import com.google.common.collect.Lists;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
@@ -15,23 +17,16 @@ import org.cavebeetle.io.Writer;
 import org.cavebeetle.maven.Digest;
 import org.cavebeetle.maven.FileHashGenerator;
 import org.cavebeetle.maven.SourceFilesDigest;
-import com.google.common.collect.Lists;
 
 /**
  * The implementation of {@code SourceFilesDigest}.
  */
-public final class DefaultSourceFilesDigest
-        implements
-            SourceFilesDigest
-{
+public final class DefaultSourceFilesDigest implements SourceFilesDigest {
     /**
      * The implementation of {@code SourceFilesDigest.Builder}.
      */
     @Singleton
-    public static final class DefaultBuilder
-            implements
-                Builder
-    {
+    public static final class DefaultBuilder implements Builder {
         private final IoApi ioApi;
         private final FileHashGenerator fileHashGenerator;
 
@@ -44,21 +39,18 @@ public final class DefaultSourceFilesDigest
          *            the {@code FileHashGenerator} instance.
          */
         @Inject
-        public DefaultBuilder(final IoApi ioApi, final FileHashGenerator fileHashGenerator)
-        {
+        public DefaultBuilder(final IoApi ioApi, final FileHashGenerator fileHashGenerator) {
             this.ioApi = ioApi;
             this.fileHashGenerator = fileHashGenerator;
         }
 
         @Override
-        public SourceFilesDigest newSourceFilesDigest(final List<String> sourceFileLines)
-        {
+        public SourceFilesDigest newSourceFilesDigest(final List<String> sourceFileLines) {
             return new DefaultSourceFilesDigest(fileHashGenerator, sourceFileLines);
         }
 
         @Override
-        public SourceFilesDigest newSourceFilesDigest(final File file)
-        {
+        public SourceFilesDigest newSourceFilesDigest(final File file) {
             return new DefaultSourceFilesDigest(ioApi, fileHashGenerator, file);
         }
     }
@@ -74,8 +66,7 @@ public final class DefaultSourceFilesDigest
      * @param sourceFileLines
      *            the list of source files.
      */
-    public DefaultSourceFilesDigest(final FileHashGenerator fileHashGenerator, final List<String> sourceFileLines)
-    {
+    public DefaultSourceFilesDigest(final FileHashGenerator fileHashGenerator, final List<String> sourceFileLines) {
         checkNotNull(fileHashGenerator, "Missing 'fileHashGenerator'.");
         checkNotNull(sourceFileLines, "Missing 'sourceFileLines'.");
         sort(sourceFileLines);
@@ -93,15 +84,13 @@ public final class DefaultSourceFilesDigest
      * @param file
      *            the file with the list of source files and dependencies.
      */
-    public DefaultSourceFilesDigest(final IoApi ioApi, final FileHashGenerator fileHashGenerator, final File file)
-    {
+    public DefaultSourceFilesDigest(final IoApi ioApi, final FileHashGenerator fileHashGenerator, final File file) {
         checkNotNull(ioApi, "Missing 'ioApi'.");
         checkNotNull(fileHashGenerator, "Missing 'fileHashGenerator'.");
         checkNotNull(file, "Missing 'file'.");
         final TextFile textFile = ioApi.newTextFile(file);
         final List<String> sourceFileLines_ = newArrayList();
-        for (final String line : textFile)
-        {
+        for (final String line : textFile) {
             sourceFileLines_.add(line);
         }
         sort(sourceFileLines_);
@@ -110,31 +99,26 @@ public final class DefaultSourceFilesDigest
     }
 
     @Override
-    public Digest getDigest()
-    {
+    public Digest getDigest() {
         return digest;
     }
 
     @Override
-    public void write(final Writer writer)
-    {
-        for (final String digestLine : this)
-        {
+    public void write(final Writer writer) {
+        for (final String digestLine : this) {
             writer.writeLine(digestLine);
         }
     }
 
     @Override
-    public Iterator<String> iterator()
-    {
+    public Iterator<String> iterator() {
         final List<String> lines = Lists.newArrayList();
         lines.addAll(sourceFileLines);
         return lines.iterator();
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + digest.hashCode();
@@ -143,14 +127,11 @@ public final class DefaultSourceFilesDigest
     }
 
     @Override
-    public boolean equals(final Object object)
-    {
-        if (this == object)
-        {
+    public boolean equals(final Object object) {
+        if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
         final DefaultSourceFilesDigest other = (DefaultSourceFilesDigest) object;

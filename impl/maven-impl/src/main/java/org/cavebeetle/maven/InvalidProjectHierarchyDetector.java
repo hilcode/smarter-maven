@@ -1,14 +1,13 @@
 package org.cavebeetle.maven;
 
-import java.util.List;
 import com.google.common.base.Optional;
+import java.util.List;
 
 /**
  * An {@code InvalidProjectHierarchyDetector} detects whether any non-snapshot project in the project hierarchy has
  * snapshot dependencies.
  */
-public interface InvalidProjectHierarchyDetector
-{
+public interface InvalidProjectHierarchyDetector {
     /**
      * Aborts the build if an invalid project hierarchy is detected. If a non-snapshot project has a snapshot dependency
      * then the project hierarchy is deemed invalid.

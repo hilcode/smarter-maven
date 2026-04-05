@@ -5,15 +5,11 @@ import java.io.File;
 /**
  * A {@code FileWriter} writes to a {@code File}.
  */
-public interface FileWriter
-        extends
-            Writer
-{
+public interface FileWriter extends Writer {
     /**
      * A factory for {@code FileWriter} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code FileWriter}.
          *

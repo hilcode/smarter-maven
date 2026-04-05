@@ -1,6 +1,9 @@
 package org.cavebeetle.maven.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.Optional;
+import com.google.common.collect.Lists;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -17,17 +20,12 @@ import org.cavebeetle.maven.GavToProjectMap;
 import org.cavebeetle.maven.InternalApi;
 import org.cavebeetle.maven.InvalidProjectHierarchyDetector;
 import org.codehaus.plexus.logging.Logger;
-import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
 
 /**
  * The implementation of {@code AfterProjectsRead}.
  */
 @Singleton
-public final class DefaultAfterProjectsRead
-        implements
-            AfterProjectsRead
-{
+public final class DefaultAfterProjectsRead implements AfterProjectsRead {
     private final ActiveDetector activeDetector;
     private final AfterProjectsReadInternal afterProjectsReadInternal;
     private final InvalidProjectHierarchyDetector invalidProjectHierarchyDetector;
@@ -35,12 +33,10 @@ public final class DefaultAfterProjectsRead
     /**
      * Creates a new {@code DefaultAfterProjectsRead}.
      *
-     * @param internalApi
-     *            the {@code InternalApi} instance.
+     * @param internalApi the {@code InternalApi} instance.
      */
     @Inject
-    public DefaultAfterProjectsRead(final InternalApi internalApi)
-    {
+    public DefaultAfterProjectsRead(final InternalApi internalApi) {
         checkNotNull(internalApi, "Missing 'internalApi'.");
         activeDetector = internalApi.getActiveDetector();
         afterProjectsReadInternal = internalApi.getAfterProjectsReadInternal();
@@ -52,53 +48,41 @@ public final class DefaultAfterProjectsRead
             final Logger logger,
             final RuntimeInformation runtimeInformation,
             final MavenSession mavenSession,
-            final ProjectBuilder projectBuilder)
-    {
+            final ProjectBuilder projectBuilder) {
         checkNotNull(logger, "Missing 'logger'.");
         checkNotNull(runtimeInformation, "Missing 'runtimeInformation'.");
         checkNotNull(mavenSession, "Missing 'mavenSession'.");
         checkNotNull(projectBuilder, "Missing 'projectBuilder'.");
-        if (activeDetector.showBanner(mavenSession))
-        {
+        if (activeDetector.showBanner(mavenSession)) {
             final GavToProjectMap gavToProjectMap =
                     afterProjectsReadInternal.initializeGavToProjectMap(logger, mavenSession, projectBuilder);
             final Optional<String> maybeErrorMessage;
             maybeErrorMessage = invalidProjectHierarchyDetector.getInvalidProjectHierarchyError(gavToProjectMap);
-            if (maybeErrorMessage.isPresent())
-            {
+            if (maybeErrorMessage.isPresent()) {
                 final String errorMessage = maybeErrorMessage.get();
                 throw new BuildAbort(errorMessage);
             }
             final MavenExecutionRequest mavenExecutionRequest =
                     afterProjectsReadInternal.getMavenExecutionRequest(logger, mavenSession, gavToProjectMap);
-            if (activeDetector.isSmarterMavenActive(mavenSession))
-            {
-                if (mavenExecutionRequest.getSelectedProjects().isEmpty())
-                {
+            if (activeDetector.isSmarterMavenActive(mavenSession)) {
+                if (mavenExecutionRequest.getSelectedProjects().isEmpty()) {
                     logger.info("");
                     final List<MavenProject> dirtyProjects =
                             afterProjectsReadInternal.collectDirtyProjects(logger, mavenSession, gavToProjectMap);
-                    if (!dirtyProjects.isEmpty())
-                    {
+                    if (!dirtyProjects.isEmpty()) {
                         logger.info("");
-                    }
-                    else
-                    {
-                        dirtyProjects.add(afterProjectsReadInternal.createDummyProjectToIndicateNothingToDo());
+                    } else {
+                        dirtyProjects.add(mavenSession.getTopLevelProject());
+                        mavenSession.getRequest().setGoals(Lists.newArrayList("validate"));
                     }
                     mavenSession.setProjects(dirtyProjects);
                 }
-            }
-            else if (activeDetector.showProjectHierarchyWarnings(mavenSession))
-            {
+            } else if (activeDetector.showProjectHierarchyWarnings(mavenSession)) {
                 mavenSession
                         .getUserProperties()
                         .setProperty(ActiveDetector.SHOW_PROJECT_HIERARCHY_WARNINGS_PROPERTY, "TRUE");
-                mavenSession.getGoals().clear();
-                mavenSession.getGoals().add("validate");
-                final MavenProject dummyProject =
-                        afterProjectsReadInternal.createDummyProjectToIndicateProjectHierarchyCheck();
-                mavenSession.setProjects(Lists.newArrayList(dummyProject));
+                mavenSession.getRequest().setGoals(Lists.newArrayList("validate"));
+                mavenSession.setProjects(Lists.newArrayList(mavenSession.getTopLevelProject()));
             }
         }
     }

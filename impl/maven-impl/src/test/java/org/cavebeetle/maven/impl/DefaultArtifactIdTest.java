@@ -1,19 +1,19 @@
 package org.cavebeetle.maven.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * The unit tests for {@code DefaultArtifactId}.
  */
-public final class DefaultArtifactIdTest
-{
+public final class DefaultArtifactIdTest {
     private String artifactIdAsText;
     private DefaultArtifactId artifactId;
     private DefaultArtifactId artifactIdCopy;
@@ -22,9 +22,8 @@ public final class DefaultArtifactIdTest
     /**
      * Sets up each unit test.
      */
-    @Before
-    public void setUp()
-    {
+    @BeforeEach
+    public void setUp() {
         artifactIdAsText = "artifact-id";
         artifactId = new DefaultArtifactId(artifactIdAsText);
         artifactIdCopy = new DefaultArtifactId(artifactIdAsText);
@@ -35,15 +34,12 @@ public final class DefaultArtifactIdTest
      * Tests that a missing artifact id is not valid.
      */
     @Test
-    public final void a_missing_artifact_id_is_not_valid()
-    {
-        try
-        {
-            new DefaultArtifactId(null);
+    public final void a_missing_artifact_id_is_not_valid() {
+        try {
+            @SuppressWarnings("unused")
+            var ignored = new DefaultArtifactId(null);
             fail("Expected an IllegalArgumentException.");
-        }
-        catch (final IllegalArgumentException e)
-        {
+        } catch (final IllegalArgumentException e) {
             assertEquals("Missing 'artifactId'.", e.getMessage());
         }
     }
@@ -52,15 +48,12 @@ public final class DefaultArtifactIdTest
      * Tests that an empty artifact id is not valid.
      */
     @Test
-    public final void an_empty_artifact_id_is_not_valid()
-    {
-        try
-        {
-            new DefaultArtifactId("");
+    public final void an_empty_artifact_id_is_not_valid() {
+        try {
+            @SuppressWarnings("unused")
+            var ignored = new DefaultArtifactId("");
             fail("Expected an IllegalArgumentException.");
-        }
-        catch (final IllegalArgumentException e)
-        {
+        } catch (final IllegalArgumentException e) {
             assertEquals("Missing 'artifactId'.", e.getMessage());
         }
     }
@@ -69,8 +62,7 @@ public final class DefaultArtifactIdTest
      * Tests that the provided artifact id is used.
      */
     @Test
-    public final void the_provided_artifact_id_is_used()
-    {
+    public final void the_provided_artifact_id_is_used() {
         assertSame(artifactIdAsText, artifactId.toString());
     }
 
@@ -78,8 +70,7 @@ public final class DefaultArtifactIdTest
      * Tests that an {@code ArtifactId} has a valid {@code Object#hashCode()} implementation.
      */
     @Test
-    public final void an_ArtifactId_has_a_valid_Object_hashCode_implementation()
-    {
+    public final void an_ArtifactId_has_a_valid_Object_hashCode_implementation() {
         assertEquals(artifactId.hashCode(), artifactId.hashCode());
         assertEquals(artifactId.hashCode(), artifactIdCopy.hashCode());
         assertNotEquals(artifactId.hashCode(), otherArtifactId.hashCode());
@@ -90,8 +81,8 @@ public final class DefaultArtifactIdTest
      * Tests that an {@code ArtifactId} has a valid {@code Object#equals(Object)} implementation.
      */
     @Test
-    public final void an_ArtifactId_has_a_valid_Object_equals_implementation()
-    {
+    @SuppressWarnings("ObjectEqualsNull")
+    public final void an_ArtifactId_has_a_valid_Object_equals_implementation() {
         assertTrue(artifactId.equals(artifactId));
         assertTrue(artifactId.equals(artifactIdCopy));
         assertTrue(artifactIdCopy.equals(artifactId));

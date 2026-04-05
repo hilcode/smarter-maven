@@ -5,8 +5,7 @@ import org.apache.maven.execution.MavenSession;
 /**
  * An {@code ActiveDetector} detects whether the Smart Maven extension is active.
  */
-public interface ActiveDetector
-{
+public interface ActiveDetector {
     /**
      * The name of the user property indicating that the project hierarchy warnings should be shown.
      */

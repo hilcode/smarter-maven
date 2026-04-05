@@ -10,27 +10,19 @@ import org.cavebeetle.io.IoException;
 /**
  * The implementation of {@code InputStream}.
  */
-public final class DefaultInputStream
-        implements
-            InputStream
-{
+public final class DefaultInputStream implements InputStream {
     /**
      * The implementation of {@code InputStream.Builder}.
      */
     @Singleton
-    public static final class DefaultBuilder
-            implements
-                Builder
-    {
+    public static final class DefaultBuilder implements Builder {
         @Override
-        public InputStream newInputStream(final File file)
-        {
+        public InputStream newInputStream(final File file) {
             return new DefaultInputStream(file);
         }
 
         @Override
-        public InputStream newInputStream(final String text)
-        {
+        public InputStream newInputStream(final String text) {
             return new DefaultInputStream(text);
         }
     }
@@ -43,14 +35,10 @@ public final class DefaultInputStream
      * @param file
      *            the file to read from.
      */
-    public DefaultInputStream(final File file)
-    {
-        try
-        {
+    public DefaultInputStream(final File file) {
+        try {
             delegate = new java.io.FileInputStream(file);
-        }
-        catch (final java.io.FileNotFoundException e)
-        {
+        } catch (final java.io.FileNotFoundException e) {
             throw new FileNotFoundException(e.getMessage(), e);
         }
     }
@@ -61,34 +49,25 @@ public final class DefaultInputStream
      * @param text
      *            the text to read from.
      */
-    public DefaultInputStream(final String text)
-    {
+    public DefaultInputStream(final String text) {
         final byte[] bytes = text.getBytes();
         delegate = new ByteArrayInputStream(bytes);
     }
 
     @Override
-    public void close()
-    {
-        try
-        {
+    public void close() {
+        try {
             delegate.close();
-        }
-        catch (final java.io.IOException e)
-        {
+        } catch (final java.io.IOException e) {
             throw new IoException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int read(final byte[] buffer)
-    {
-        try
-        {
+    public int read(final byte[] buffer) {
+        try {
             return delegate.read(buffer);
-        }
-        catch (final java.io.IOException e)
-        {
+        } catch (final java.io.IOException e) {
             throw new IoException(e.getMessage(), e);
         }
     }

@@ -3,15 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A map from {@code Gav}s to their corresponding {@code Project}s.
  */
-public interface GavToProjectMap
-        extends
-            Iterable<Gav>
-{
+public interface GavToProjectMap extends Iterable<Gav> {
     /**
      * A factory of {@code GavToProjectMap} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code GavToProjectMap}.
          *

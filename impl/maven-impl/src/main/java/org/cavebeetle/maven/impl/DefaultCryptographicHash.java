@@ -2,6 +2,7 @@ package org.cavebeetle.maven.impl;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.cavebeetle.io.IoApi.END_OF_LINE;
+
 import java.security.MessageDigest;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,18 +15,12 @@ import org.cavebeetle.maven.InternalApi;
 /**
  * The implementation of {@code CryptographicHash}.
  */
-public final class DefaultCryptographicHash
-        implements
-            CryptographicHash
-{
+public final class DefaultCryptographicHash implements CryptographicHash {
     /**
      * The implementation of {@code CryptographicHash.Builder}.
      */
     @Singleton
-    public static final class DefaultBuilder
-            implements
-                Builder
-    {
+    public static final class DefaultBuilder implements Builder {
         private final InternalApi internalApi;
 
         /**
@@ -35,15 +30,13 @@ public final class DefaultCryptographicHash
          *            the {@code InternalApi} instance.
          */
         @Inject
-        public DefaultBuilder(final InternalApi internalApi)
-        {
+        public DefaultBuilder(final InternalApi internalApi) {
             checkNotNull(internalApi, "Missing 'internalApi'.");
             this.internalApi = internalApi;
         }
 
         @Override
-        public CryptographicHash newCryptographicHash(final CryptographicHashAlgorithm cryptographicHashAlgorithm)
-        {
+        public CryptographicHash newCryptographicHash(final CryptographicHashAlgorithm cryptographicHashAlgorithm) {
             return new DefaultCryptographicHash(internalApi, cryptographicHashAlgorithm);
         }
     }
@@ -62,9 +55,7 @@ public final class DefaultCryptographicHash
      *            the cryptographic hash algorithm to use.
      */
     public DefaultCryptographicHash(
-            final InternalApi internalApi,
-            final CryptographicHashAlgorithm cryptographicHashAlgorithm)
-    {
+            final InternalApi internalApi, final CryptographicHashAlgorithm cryptographicHashAlgorithm) {
         checkNotNull(internalApi, "Missing 'internalApi'.");
         checkNotNull(cryptographicHashAlgorithm, "Missing 'cryptographicHashAlgorithm'.");
         this.internalApi = internalApi;
@@ -72,16 +63,13 @@ public final class DefaultCryptographicHash
     }
 
     @Override
-    public Digest generateDigest(final InputStream inputStream)
-    {
+    public Digest generateDigest(final InputStream inputStream) {
         checkNotNull(inputStream, "Missing 'inputStream'.");
         final MessageDigest messageDigest = cryptographicHashAlgorithm.newMessageDigest();
         final byte[] buffer = new byte[BUFFER_SIZE];
-        while (true)
-        {
+        while (true) {
             final int byteCount = inputStream.read(buffer);
-            if (byteCount == -1)
-            {
+            if (byteCount == -1) {
                 break;
             }
             messageDigest.update(buffer, 0, byteCount);
@@ -90,12 +78,10 @@ public final class DefaultCryptographicHash
     }
 
     @Override
-    public Digest generateDigest(final Iterable<String> lines)
-    {
+    public Digest generateDigest(final Iterable<String> lines) {
         checkNotNull(lines, "Missing 'lines'.");
         final MessageDigest messageDigest = cryptographicHashAlgorithm.newMessageDigest();
-        for (final String line : lines)
-        {
+        for (final String line : lines) {
             final String line_ = line + END_OF_LINE;
             messageDigest.update(line_.getBytes());
         }

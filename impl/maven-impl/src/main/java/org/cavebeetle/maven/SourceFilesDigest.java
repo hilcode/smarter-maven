@@ -7,15 +7,11 @@ import org.cavebeetle.io.Writer;
 /**
  * A {@code SourceFilesDigest} is a listing of all source files of a project.
  */
-public interface SourceFilesDigest
-        extends
-            Iterable<String>
-{
+public interface SourceFilesDigest extends Iterable<String> {
     /**
      * A factory of {@code SourceFilesDigest} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code SourceFilesDigest}.
          *

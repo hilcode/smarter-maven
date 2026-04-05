@@ -8,8 +8,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code AfterProjectsRead} handles the {@code afterProjectsRead} event.
  */
-public interface AfterProjectsRead
-{
+public interface AfterProjectsRead {
     /**
      * Handles the {@code afterProjectsRead} event.
      *

@@ -7,10 +7,7 @@ import org.codehaus.plexus.logging.Logger;
 /**
  * A {@code MavenExecutionListener} initializes a {@code GavToProjectMap}.
  */
-public interface MavenExecutionListener
-        extends
-            ExecutionListener
-{
+public interface MavenExecutionListener extends ExecutionListener {
     /**
      * Initializes the given {@code GavToProjectMap}.
      *

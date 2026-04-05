@@ -12,39 +12,29 @@ import org.cavebeetle.maven.SnapshotDetector;
  * The implementation of {@code SnapshotDetector}.
  */
 @Singleton
-public final class DefaultSnapshotDetector
-        implements
-            SnapshotDetector
-{
+public final class DefaultSnapshotDetector implements SnapshotDetector {
     @Override
-    public boolean isSnapshot(final MavenProject mavenProject)
-    {
-        try
-        {
+    public boolean isSnapshot(final MavenProject mavenProject) {
+        try {
             final Artifact artifact = mavenProject.getArtifact();
             final ArtifactVersion artifactVersion = artifact.getSelectedVersion();
             return isSnapshot(artifactVersion.toString());
-        }
-        catch (final Exception e)
-        {
+        } catch (final Exception e) {
             throw new IllegalStateException(e);
         }
     }
 
     @Override
-    public boolean isSnapshot(final Dependency dependency)
-    {
+    public boolean isSnapshot(final Dependency dependency) {
         return isSnapshot(dependency.getVersion());
     }
 
     @Override
-    public boolean isSnapshot(final Gav gav)
-    {
+    public boolean isSnapshot(final Gav gav) {
         return isSnapshot(gav.getVersion().toString());
     }
 
-    private boolean isSnapshot(final String version)
-    {
+    private boolean isSnapshot(final String version) {
         return version.endsWith("-SNAPSHOT");
     }
 }

@@ -4,19 +4,17 @@ package org.cavebeetle.maven;
  * The internal API of {@code org.cavebeetle.maven}.
  */
 public interface InternalApi
-        extends
-            MavenApi,
-            Project.Builder,
-            CryptographicHash.Builder,
-            GavToProjectMap.Builder,
-            Digest.Builder,
-            Gav.Builder,
-            GroupId.Builder,
-            ArtifactId.Builder,
-            DirtyReason.Builder,
-            Version.Builder,
-            SourceFilesDigest.Builder
-{
+        extends MavenApi,
+                Project.Builder,
+                CryptographicHash.Builder,
+                GavToProjectMap.Builder,
+                Digest.Builder,
+                Gav.Builder,
+                GroupId.Builder,
+                ArtifactId.Builder,
+                DirtyReason.Builder,
+                Version.Builder,
+                SourceFilesDigest.Builder {
     /**
      * Gets the singleton {@code ActiveDetector} instance.
      *

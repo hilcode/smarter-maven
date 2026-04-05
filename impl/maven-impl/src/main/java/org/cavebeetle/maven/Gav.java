@@ -3,13 +3,11 @@ package org.cavebeetle.maven;
 /**
  * A combination of a group id, an artifact id, and a version.
  */
-public interface Gav
-{
+public interface Gav {
     /**
      * A factory of {@code Gav} instances.
      */
-    public interface Builder
-    {
+    public interface Builder {
         /**
          * Creates a new {@code Gav}.
          *
